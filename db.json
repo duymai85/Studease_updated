@@ -1,0 +1,59 @@
+{
+  "user": [
+    {
+      "id": 1,
+      "name": "Nihira",
+      "password": "admin",
+      "email": "nihiratechiees@gmail.com",
+      "phone": "8989898989"
+    },
+    {
+      "id": 2,
+      "name": "Fullname",
+      "password": "ntuser",
+      "email": "email@email.com",
+      "phone": "56778889989"
+    },
+    {
+      "id": "76c87e6d-bc4c-4ba1-9c42-460bb4cf19de",
+      "name": "admin1233",
+      "phone": "",
+      "email": "admin123@gmail.com",
+      "password": "admin123"
+    },
+    {
+      "id": "accc8379-cce8-42a7-b875-d2aec25b5b5a",
+      "phone": "",
+      "name": "quoclong123",
+      "email": "quoclong@gmail.com",
+      "password": "12345678"
+    }
+  ],
+  "class": [
+    {
+      "id": 1,
+      "className": "Test",
+      "description": "",
+      "school": "",
+      "userId": "1",
+      "subjectIds": [
+        "1",
+        "2"
+      ],
+      "permissions": true,
+      "created_at": "123123",
+      "updated_at": "123123"
+    },
+    {
+      "id": "3f8182be-0cc5-46af-8954-966d288a5bf3",
+      "className": "test",
+      "description": "123",
+      "permissions": true,
+      "school": "hihi",
+      "userId": 1,
+      "subjectIds": [],
+      "created_at": 1699264139619,
+      "updated_at": 1699264139619
+    }
+  ]
+}
