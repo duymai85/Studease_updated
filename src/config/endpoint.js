@@ -1,7 +1,8 @@
 const RESOURCES = {
   auth: 'auth',
-  user: 'user',
-  class: 'class',
+  user: 'users',
+  class: 'classes',
+  set: 'sets',
 };
 
 export const ENDPOINT = {
@@ -15,5 +16,8 @@ export const ENDPOINT = {
   },
   class: {
     index: `${RESOURCES.class}`,
+  },
+  set: {
+    index: `${RESOURCES.set}`,
   },
 };

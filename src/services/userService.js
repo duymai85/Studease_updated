@@ -11,14 +11,14 @@ export const userService = {
   getUserById(id) {
     return client.request({
       method: 'get',
-      url: `${ENDPOINT.user.index}?id=${id}`,
+      url: `${ENDPOINT.user.index}/${id}`,
     });
   },
   login(data) {
-    const { email, password } = data;
+    const { username, password } = data;
     return client.request({
       method: 'get',
-      url: `${ENDPOINT.user.index}?email=${email}&password=${password}`,
+      url: `${ENDPOINT.user.index}?username=${username}&password=${password}`,
     });
   },
   register(data) {
@@ -28,10 +28,17 @@ export const userService = {
       data,
     });
   },
-  checkExistUser(email) {
+  checkExistUser(username) {
     return client.request({
       method: 'get',
-      url: `${ENDPOINT.user.index}?email=${email}`,
+      url: `${ENDPOINT.user.index}?username=${username}`,
+    });
+  },
+  updateUser(data) {
+    return client.request({
+      method: 'put',
+      url: `${ENDPOINT.user.index}/${data.id}`,
+      data,
     });
   },
 };
