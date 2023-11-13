@@ -2,10 +2,22 @@ import { useState } from 'react';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
-import { Navbar, View, About, BasePage, Search } from './components';
-import { Home, Login, SignUp, CreateClass, CreateCard } from './pages/index';
+import { Header, View, About, BasePage, Search } from './components';
+import {
+  Home,
+  Login,
+  SignUp,
+  CreateClass,
+  CreateSet,
+  Class,
+  Profile,
+  Settings,
+  Set,
+  EditSet,
+} from './pages';
 
 import 'react-toastify/dist/ReactToastify.css';
+import 'react-day-picker/dist/style.css';
 import './App.css';
 
 function App() {
@@ -33,7 +45,7 @@ function App() {
 
       <div className={`h-full ${!isPageNotUseHeader ? 'pt-24' : ''}`}>
         <BrowserRouter>
-          {!isPageNotUseHeader ? <Navbar changeUI={changeUI} /> : null}
+          {!isPageNotUseHeader ? <Header changeUI={changeUI} /> : null}
           <Routes>
             <Route path='/' element={<BasePage changeUI={changeUIHandler} />}>
               <Route path='/' element={<Home />}></Route>
@@ -44,13 +56,18 @@ function App() {
 
             <Route path='/login' element={<Login />}></Route>
             <Route path='/signup' element={<SignUp />}></Route>
+            <Route path='/class/:id' element={<Class />}></Route>
+            <Route path='/set/:id' element={<Set />}></Route>
+            <Route path='/profile/:id' element={<Profile />}></Route>
+            <Route path='/settings' element={<Settings />}></Route>
+            <Route path='/set/edit/:id' element={<EditSet />}></Route>
             <Route
               path='/view'
               element={<View changeUI={changeUIHandler} />}
             ></Route>
             <Route
-              path='/create-card'
-              element={<CreateCard changeUI={changeUIHandler} />}
+              path='/create-set'
+              element={<CreateSet changeUI={changeUIHandler} />}
             ></Route>
             <Route
               path='/create-class'

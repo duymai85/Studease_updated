@@ -2,10 +2,10 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { flashCardService } from '../services';
+import { flashCardService } from '../../services';
 import { v4 as uuidv4 } from 'uuid';
 
-import { KEY_LS } from '../utils/constant';
+import { KEY_LS } from '../../utils/constant';
 
 export const CreateClass = () => {
   const {
@@ -40,7 +40,7 @@ export const CreateClass = () => {
         id: uuidv4(),
         ...data,
         userId,
-        subjectIds: [],
+        setIds: [],
         created_at: Date.now(),
         updated_at: Date.now(),
       };

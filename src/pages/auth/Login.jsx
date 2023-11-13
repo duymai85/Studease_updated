@@ -8,8 +8,8 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
-import { userService } from '../services';
-import { KEY_LS } from '../utils/constant';
+import { userService } from '../../services';
+import { KEY_LS } from '../../utils/constant';
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -26,6 +26,12 @@ export const Login = () => {
         if (res.data.length) {
           toast.success('Login successfully.');
           localStorage.setItem(KEY_LS.USER_INFO, JSON.stringify(res.data[0]));
+          const dateLogin =
+            JSON.parse(localStorage.getItem(KEY_LS.DATE_LOGIN)) || [];
+          localStorage.setItem(
+            KEY_LS.DATE_LOGIN,
+            JSON.stringify([...dateLogin, new Date()])
+          );
           navigate('/');
         } else {
           toast.error('Account does not exist.');
@@ -37,9 +43,9 @@ export const Login = () => {
   };
 
   return (
-    <section className='dark:bg-gray-900 h-full'>
+    <section className='h-full'>
       <div className='flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen h-full lg:py-0'>
-        <div className='w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700'>
+        <div className='w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0 '>
           <div className='p-6 space-y-4 md:space-y-6 sm:p-8'>
             <h1 className='text-center'>
               <Link
@@ -49,7 +55,7 @@ export const Login = () => {
                 StudEase
               </Link>
             </h1>
-            <h2 className='text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white'>
+            <h2 className='text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl '>
               Login
             </h2>
             <form
@@ -58,34 +64,27 @@ export const Login = () => {
             >
               <div>
                 <label
-                  for='email'
-                  className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
+                  htmlFor='username'
+                  className='block mb-2 text-sm font-medium text-gray-900 '
                 >
-                  Your email
+                  Username
                 </label>
                 <input
-                  type='email'
-                  id='email'
-                  className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-                  placeholder='name@gmail.com'
-                  {...register('email', {
-                    required: 'Email is required',
-                    pattern: {
-                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                      message: 'Invalid email address',
-                    },
-                  })}
+                  type='text'
+                  id='username'
+                  className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5'
+                  {...register('username', { required: true })}
                 />
-                {errors.email?.message && (
+                {errors.username && (
                   <span className='text-red-600 text-xs'>
-                    {errors.email?.message}
+                    Username is required
                   </span>
                 )}
               </div>
               <div>
                 <label
-                  for='password'
-                  className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
+                  htmlFor='password'
+                  className='block mb-2 text-sm font-medium text-gray-900'
                 >
                   Password
                 </label>
@@ -93,7 +92,7 @@ export const Login = () => {
                   type='password'
                   id='password'
                   placeholder='••••••••'
-                  className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                  className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 '
                   {...register('password', { required: true })}
                 />
                 {errors.password && (
@@ -109,22 +108,18 @@ export const Login = () => {
                       id='remember'
                       aria-describedby='remember'
                       type='checkbox'
-                      className='w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800'
-                      required=''
+                      className='w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 '
                     />
                   </div>
                   <div className='ml-3 text-sm'>
-                    <label
-                      for='remember'
-                      className='text-gray-500 dark:text-gray-300'
-                    >
+                    <label htmlFor='remember' className='text-gray-500 '>
                       Remember me
                     </label>
                   </div>
                 </div>
                 <Link
                   to='/'
-                  className='text-sm font-medium text-primary-600 hover:underline dark:text-primary-500'
+                  className='text-sm font-medium text-primary-600 hover:underline'
                 >
                   Forgot password?
                 </Link>
@@ -135,11 +130,11 @@ export const Login = () => {
               >
                 Login
               </button>
-              <p className='text-sm font-light text-gray-500 dark:text-gray-400'>
+              <p className='text-sm font-light text-gray-500'>
                 Don’t have an account yet?{' '}
                 <Link
                   to='/signup'
-                  className='font-medium text-primary-600 hover:underline dark:text-primary-500'
+                  className='font-medium text-primary-600 hover:underline'
                 >
                   Sign up
                 </Link>

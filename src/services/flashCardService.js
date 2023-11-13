@@ -14,6 +14,12 @@ export const flashCardService = {
       url: `${ENDPOINT.class.index}?id=${id}`,
     });
   },
+  getClassByUserId(userId) {
+    return client.request({
+      method: 'get',
+      url: `${ENDPOINT.class.index}?userId=${userId}`,
+    });
+  },
   createClass(data) {
     return client.request({
       method: 'post',
@@ -21,10 +27,49 @@ export const flashCardService = {
       data,
     });
   },
+  updateClass(data) {
+    return client.request({
+      method: 'put',
+      url: `${ENDPOINT.class.index}/${data.id}`,
+      data,
+    });
+  },
   checkExistClass(className) {
     return client.request({
       method: 'get',
       url: `${ENDPOINT.class.index}?className=${className}`,
+    });
+  },
+  getAllSet() {
+    return client.request({
+      method: 'get',
+      url: ENDPOINT.set.index,
+    });
+  },
+  getSetById(id) {
+    return client.request({
+      method: 'get',
+      url: `${ENDPOINT.set.index}/${id}`,
+    });
+  },
+  getSetByUserId(userId) {
+    return client.request({
+      method: 'get',
+      url: `${ENDPOINT.set.index}?userId=${userId}`,
+    });
+  },
+  createSet(data) {
+    return client.request({
+      method: 'post',
+      url: `${ENDPOINT.set.index}`,
+      data,
+    });
+  },
+  updateSet(data) {
+    return client.request({
+      method: 'put',
+      url: `${ENDPOINT.set.index}/${data.id}`,
+      data,
     });
   },
 };

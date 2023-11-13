@@ -1,5 +1,10 @@
-export { CreateCard } from './CreateCard';
 export { Home } from './Home';
-export { Login } from './Login';
-export { SignUp } from './SignUp';
-export { CreateClass } from './CreateClass';
+export { Login } from './auth/Login';
+export { SignUp } from './auth/SignUp';
+export { Profile } from './user/Profile';
+export { Settings } from './user/Settings';
+export { CreateSet } from './card/CreateSet';
+export { CreateClass } from './card/CreateClass';
+export { Class } from './card/Class';
+export { Set } from './card/Set';
+export { EditSet } from './card/EditSet';

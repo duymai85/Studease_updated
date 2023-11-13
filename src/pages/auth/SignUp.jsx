@@ -3,12 +3,7 @@ import { useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
 import { toast } from 'react-toastify';
 
-import GoogleIcon from '@mui/icons-material/Google';
-import GitHubIcon from '@mui/icons-material/GitHub';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-
-import { userService } from '../services';
+import { userService } from '../../services';
 
 export const SignUp = () => {
   const navigate = useNavigate();
@@ -19,28 +14,30 @@ export const SignUp = () => {
     formState: { errors },
   } = useForm();
 
-  const checkUser = async (email) => {
+  const checkUser = async (username) => {
     let flag = false;
 
     await userService
-      .checkExistUser(email)
+      .checkExistUser(username)
       .then((res) => {
         if (res.data.length) {
           flag = true;
         }
       })
       .catch((error) => {
-        console.log(error);
+        toast.error('Account already exists.');
       });
 
     return flag;
   };
 
   const onSubmit = async (data) => {
-    const isExistUser = await checkUser(data.email);
+    const isExistUser = await checkUser(data.username);
     const dataUser = {
       id: uuidv4(),
       phone: '',
+      name: data.username,
+      country: '',
       ...data,
     };
     delete dataUser.confirmPassword;
@@ -64,9 +61,9 @@ export const SignUp = () => {
   };
 
   return (
-    <section className='dark:bg-gray-900 h-full'>
+    <section className='h-full'>
       <div className='flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen h-full lg:py-0'>
-        <div className='w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700'>
+        <div className='w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0 '>
           <div className='p-6 space-y-4 md:space-y-6 sm:p-8'>
             <h1 className='text-center'>
               <Link
@@ -76,7 +73,7 @@ export const SignUp = () => {
                 StudEase
               </Link>
             </h1>
-            <h2 className='text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white'>
+            <h2 className='text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl'>
               Sign up
             </h2>
             <form
@@ -85,35 +82,35 @@ export const SignUp = () => {
             >
               <div>
                 <label
-                  for='name'
-                  className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
+                  for='username'
+                  className='block mb-2 text-sm font-medium text-gray-900'
                 >
-                  Your name
+                  Your username
                 </label>
                 <input
                   type='text'
-                  id='name'
-                  className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                  id='username'
+                  className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 '
                   placeholder=''
-                  {...register('name', { required: true })}
+                  {...register('username', { required: true })}
                 />
-                {errors.name && (
+                {errors.username && (
                   <span className='text-red-600 text-xs'>
-                    Your name is required
+                    Your username is required
                   </span>
                 )}
               </div>
               <div>
                 <label
                   for='email'
-                  className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
+                  className='block mb-2 text-sm font-medium text-gray-900 '
                 >
                   Your email
                 </label>
                 <input
                   type='email'
                   id='email'
-                  className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                  className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 '
                   placeholder='name@gmail.com'
                   {...register('email', {
                     required: 'Email is required',
@@ -132,7 +129,7 @@ export const SignUp = () => {
               <div>
                 <label
                   for='password'
-                  className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
+                  className='block mb-2 text-sm font-medium text-gray-900'
                 >
                   Password
                 </label>
@@ -140,7 +137,7 @@ export const SignUp = () => {
                   type='password'
                   id='password'
                   placeholder='••••••••'
-                  className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                  className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 '
                   {...register('password', { required: true })}
                 />
                 {errors.password && (
@@ -151,8 +148,8 @@ export const SignUp = () => {
               </div>
               <div>
                 <label
-                  for='confirm-password'
-                  class='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
+                  htmlFor='confirm-password'
+                  className='block mb-2 text-sm font-medium text-gray-900'
                 >
                   Confirm password
                 </label>
@@ -160,7 +157,7 @@ export const SignUp = () => {
                   type='password'
                   id='confirm-password'
                   placeholder='••••••••'
-                  class='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                  className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 '
                   {...register('confirmPassword', {
                     required: 'Confirm password is required',
                     validate: (val) => {
@@ -182,11 +179,11 @@ export const SignUp = () => {
               >
                 Sign up
               </button>
-              <p class='text-sm font-light text-gray-500 dark:text-gray-400'>
+              <p className='text-sm font-light text-gray-500'>
                 Already have an account?{' '}
                 <Link
                   to='/login'
-                  class='font-medium text-primary-600 hover:underline dark:text-primary-500'
+                  className='font-medium text-primary-600 hover:underline'
                 >
                   Login here
                 </Link>

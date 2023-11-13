@@ -1,42 +1,59 @@
 {
-  "user": [
+  "users": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Nihira",
+      "username": "nitri",
       "password": "admin",
       "email": "nihiratechiees@gmail.com",
-      "phone": "8989898989"
+      "phone": "8989898989",
+      "country": ""
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Fullname",
+      "username": "ntuser",
       "password": "ntuser",
       "email": "email@email.com",
-      "phone": "56778889989"
+      "phone": "56778889989",
+      "country": ""
     },
     {
       "id": "76c87e6d-bc4c-4ba1-9c42-460bb4cf19de",
       "name": "admin1233",
+      "username": "admin1233",
       "phone": "",
       "email": "admin123@gmail.com",
-      "password": "admin123"
+      "password": "admin123",
+      "country": ""
     },
     {
       "id": "accc8379-cce8-42a7-b875-d2aec25b5b5a",
       "phone": "",
       "name": "quoclong123",
+      "username": "quoclong123",
       "email": "quoclong@gmail.com",
-      "password": "12345678"
+      "password": "12345678",
+      "country": ""
+    },
+    {
+      "id": "f2a5c047-a317-460a-a4ca-7b97c5ae9050",
+      "phone": "0349612811",
+      "name": "admin12333",
+      "username": "admin12333",
+      "email": "admin1233@gmail.com",
+      "password": "admin1233",
+      "country": "viet nam"
     }
   ],
-  "class": [
+  "classes": [
     {
-      "id": 1,
-      "className": "Test",
+      "id": "f2a5c047-a317-460a-a4ca-7b97c5ae9052",
+      "name": "Test",
       "description": "",
-      "school": "",
-      "userId": "1",
-      "subjectIds": [
+      "school": "testttt",
+      "userId": "f2a5c047-a317-460a-a4ca-7b97c5ae9050",
+      "setIds": [
         "1",
         "2"
       ],
@@ -45,15 +62,94 @@
       "updated_at": "123123"
     },
     {
-      "id": "3f8182be-0cc5-46af-8954-966d288a5bf3",
-      "className": "test",
+      "id": "f2a5c047-a317-460a-a4ca-7b97c5ae9051",
+      "name": "test",
       "description": "123",
       "permissions": true,
       "school": "hihi",
-      "userId": 1,
-      "subjectIds": [],
+      "userId": "f2a5c047-a317-460a-a4ca-7b97c5ae9050",
+      "setIds": [
+        "d03a05ab-bd32-4d3b-bb20-eb95690d6165"
+      ],
       "created_at": 1699264139619,
       "updated_at": 1699264139619
+    }
+  ],
+  "sets": [
+    {
+      "id": "1",
+      "name": "ten hoc phan",
+      "description": "mo ta",
+      "data": [
+        {
+          "front": "123123",
+          "back": "12321",
+          "image": "url"
+        },
+        {
+          "front": "Study",
+          "back": "Học",
+          "image": ""
+        }
+      ],
+      "userId": "f2a5c047-a317-460a-a4ca-7b97c5ae9050",
+      "created_at": 1699886613430,
+      "updated_at": 1699886613430
+    },
+    {
+      "id": "2",
+      "name": "Ten hoc phan",
+      "description": "mo ta",
+      "data": [
+        {
+          "front": "test",
+          "back": "12321",
+          "image": "Ninh-Binh-Travel-Guide-Things-To-Do-In-Ninh-Binh.jpeg"
+        },
+        {
+          "front": "test2",
+          "back": "12321",
+          "image": ""
+        },
+        {
+          "front": "Test3",
+          "back": "123123",
+          "image": ""
+        }
+      ],
+      "userId": "f2a5c047-a317-460a-a4ca-7b97c5ae9050",
+      "created_at": 1699885290385,
+      "updated_at": 1699885290385
+    },
+    {
+      "id": "d58c404e-f3d7-4eb3-897a-9d853aa2df6c",
+      "userId": "f2a5c047-a317-460a-a4ca-7b97c5ae9050",
+      "name": "Sinh hoc",
+      "description": "desic",
+      "data": [
+        {
+          "front": "123",
+          "back": "123123",
+          "image": ""
+        }
+      ],
+      "created_at": 1699264139619,
+      "updated_at": 1699264139619
+    },
+    {
+      "id": "d03a05ab-bd32-4d3b-bb20-eb95690d6165",
+      "userId": "f2a5c047-a317-460a-a4ca-7b97c5ae9050",
+      "name": "Test",
+      "description": "123123",
+      "data": [
+        {
+          "front": "123123",
+          "back": "123123123",
+          "image": ""
+        }
+      ],
+      "created_at": 1699883986834,
+      "updated_at": 1699883986834
     }
   ]
 }
