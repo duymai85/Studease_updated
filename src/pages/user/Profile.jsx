@@ -188,7 +188,7 @@ export const Profile = () => {
               ))}
             </ul>
           ) : (
-            <div className='flex items-center justify-center'>
+            <div className='flex items-center justify-center mt-4'>
               No data avaliable
             </div>
           )}
@@ -219,7 +219,7 @@ export const Profile = () => {
               ))}
             </ul>
           ) : (
-            <div className='flex items-center justify-center mt-8'>
+            <div className='flex items-center justify-center mt-4'>
               No data available
             </div>
           )}
