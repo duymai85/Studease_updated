@@ -136,13 +136,13 @@ export const Home = (props) => {
         <div className='mt-5'>
           <h2 className='text-2xl font-bold mb-4'>Recent</h2>
           {listSet.length && (
-            <ul className='flex items-center gap-4 justify-between flex-wrap lg:flex-row flex-col'>
+            <ul className='flex items-center gap-4 flex-wrap lg:flex-row flex-col'>
               {listSet.slice(0, 5).map((item, index) => (
                 <li
                   key={index}
                   className='p-4 border shadow border-gray-300 rounded-xl lg:w-[32%] w-full'
                 >
-                  <Link to={`/set/${item.id}`} className='w-full'>
+                  <Link to={`/set/${item.id}`} className='w-full block'>
                     <h4 className='font-medium'>{item.name}</h4>
                     <div className='bg-gray-200 rounded-3xl inline-flex items-center justify-center text-[10px] pt-1 px-2 font-medium'>
                       <span>{item.data ? item.data.length : 0} Terms</span>

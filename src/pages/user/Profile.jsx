@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { toast } from 'react-toastify';
 
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import GroupIcon from '@mui/icons-material/Group';
 import CircularProgress from '@mui/material/CircularProgress';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import { flashCardService } from '../../services';
 import { KEY_LS } from '../../utils/constant';
@@ -87,6 +89,38 @@ export const Profile = () => {
     }
   };
 
+  const handleDeleteSet = async (id) => {
+    if (id) {
+      await flashCardService
+        .deleteSet(id)
+        .then((res) => {
+          if (res.status === 200) {
+            setListSet((prev) => prev.filter((item) => item.id !== id));
+            toast.success('Delete set successfully.');
+          }
+        })
+        .catch((error) => {
+          toast.error('Delete set failed.');
+        });
+    }
+  };
+
+  const handleDeleteClass = async (id) => {
+    if (id) {
+      await flashCardService
+        .deleteClass(id)
+        .then((res) => {
+          if (res.status === 200) {
+            setListClass((prev) => prev.filter((item) => item.id !== id));
+            toast.success('Delete class successfully.');
+          }
+        })
+        .catch((error) => {
+          toast.error('Delete class failed.');
+        });
+    }
+  };
+
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem(KEY_LS.USER_INFO));
     if (userInfo) {
@@ -103,7 +137,7 @@ export const Profile = () => {
       <CircularProgress />
     </Box>
   ) : (
-    <section className='pt-4'>
+    <section className='pt-4 pb-20'>
       <div className='flex items-center px-12'>
         <div className='flex items-center justify-center'>
           <img
@@ -133,7 +167,7 @@ export const Profile = () => {
             <ul className='mt-4'>
               {listSet.map((item, index) => (
                 <li
-                  className='rounded border border-[#eaeaea] px-4 py-3 mb-3 hover:shadow-md'
+                  className='rounded border border-[#eaeaea] px-4 py-3 mb-3 hover:shadow-md flex items-center justify-between'
                   key={index}
                 >
                   <Link to={`/set/${item.id}`}>
@@ -147,6 +181,9 @@ export const Profile = () => {
                       {item.name}
                     </h4>
                   </Link>
+                  <button onClick={() => handleDeleteSet(item.id)}>
+                    <DeleteIcon />
+                  </button>
                 </li>
               ))}
             </ul>
@@ -161,7 +198,7 @@ export const Profile = () => {
             <ul className='mt-4'>
               {listClass.map((item, index) => (
                 <li
-                  className='rounded border border-[#eaeaea] px-4 py-3 mb-3 hover:shadow-md'
+                  className='rounded border border-[#eaeaea] px-4 py-3 mb-3 hover:shadow-md flex items-center justify-between'
                   key={index}
                 >
                   <Link to={`/class/${item.id}`}>
@@ -175,6 +212,9 @@ export const Profile = () => {
                       {item.name}
                     </h4>
                   </Link>
+                  <button onClick={() => handleDeleteClass(item.id)}>
+                    <DeleteIcon />
+                  </button>
                 </li>
               ))}
             </ul>

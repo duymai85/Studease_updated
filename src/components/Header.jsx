@@ -17,7 +17,7 @@ import GroupIcon from '@mui/icons-material/Group';
 import { flashCardService } from '../services';
 import { KEY_LS } from '../utils/constant';
 import { checkUserLogin } from '../utils/index';
-import { requestForToken, onMessageListener } from '../config/firebase';
+// import { requestForToken, onMessageListener } from '../config/firebase';
 
 const ITEM_HEIGHT = 48;
 
@@ -114,17 +114,17 @@ export const Header = (props) => {
     getListSet();
   }, []);
 
-  useEffect(() => {
-    requestForToken();
-  }, []);
+  // useEffect(() => {
+  //   requestForToken();
+  // }, []);
 
-  useEffect(() => {
-    onMessageListener()
-      .then((payload) => {
-        console.log(payload);
-      })
-      .catch((err) => console.log('failed: ', err));
-  }, []);
+  // useEffect(() => {
+  //   onMessageListener()
+  //     .then((payload) => {
+  //       console.log(payload);
+  //     })
+  //     .catch((err) => console.log('failed: ', err));
+  // }, []);
 
   return (
     <>

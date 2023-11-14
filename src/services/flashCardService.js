@@ -27,6 +27,12 @@ export const flashCardService = {
       data,
     });
   },
+  deleteClass(id) {
+    return client.request({
+      method: 'delete',
+      url: `${ENDPOINT.class.index}/${id}`,
+    });
+  },
   updateClass(data) {
     return client.request({
       method: 'put',
@@ -70,6 +76,12 @@ export const flashCardService = {
       method: 'put',
       url: `${ENDPOINT.set.index}/${data.id}`,
       data,
+    });
+  },
+  deleteSet(id) {
+    return client.request({
+      method: 'delete',
+      url: `${ENDPOINT.set.index}/${id}`,
     });
   },
 };
