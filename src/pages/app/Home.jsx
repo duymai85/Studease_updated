@@ -8,8 +8,8 @@ import SaveIcon from '@mui/icons-material/Save';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 
-import { KEY_LS } from '../utils/constant';
-import { flashCardService, userService } from '../services';
+import { KEY_LS } from '../../utils/constant';
+import { flashCardService, userService } from '../../services';
 
 const listDay = JSON.parse(localStorage.getItem(KEY_LS.DATE_LOGIN)) || [];
 const bookedDays = listDay.map((item) => {
@@ -144,7 +144,7 @@ export const Home = (props) => {
                 >
                   <Link to={`/set/${item.id}`} className='w-full block'>
                     <h4 className='font-medium'>{item.name}</h4>
-                    <div className='bg-gray-200 rounded-3xl inline-flex items-center justify-center text-[10px] pt-1 px-2 font-medium'>
+                    <div className='bg-gray-200 rounded-3xl inline-flex items-center justify-center text-[10px] py-1 px-2 font-medium'>
                       <span>{item.data ? item.data.length : 0} Terms</span>
                     </div>
                     <div className='flex items-center gap-1 mt-12'>

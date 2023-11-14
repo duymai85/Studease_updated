@@ -1,6 +1,9 @@
-export { About } from './About';
-export { BasePage } from './BasePage';
-export { Footer } from './Footer';
-export { Header } from './Header';
-export { Search } from './Search';
-export { View } from './View';
+export * from './BasePage';
+export * from './Footer';
+export * from './Header';
+export * from './View';
+export * from './Card';
+export * from './Cards';
+export * from './CardUser';
+export * from './CardSet';
+export * from './CardClass';

@@ -20,6 +20,12 @@ export const flashCardService = {
       url: `${ENDPOINT.class.index}?userId=${userId}`,
     });
   },
+  getAllClassByName(name) {
+    return client.request({
+      method: 'get',
+      url: `${ENDPOINT.class.index}?name_like=${name}`,
+    });
+  },
   createClass(data) {
     return client.request({
       method: 'post',
@@ -62,6 +68,12 @@ export const flashCardService = {
     return client.request({
       method: 'get',
       url: `${ENDPOINT.set.index}?userId=${userId}`,
+    });
+  },
+  getAllSetByName(name) {
+    return client.request({
+      method: 'get',
+      url: `${ENDPOINT.set.index}?name_like=${name}`,
     });
   },
   createSet(data) {

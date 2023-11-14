@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
-import { Header, View, About, BasePage, Search } from './components';
+import { Header, View, BasePage } from './components';
 import {
   Home,
   Login,
@@ -14,6 +14,8 @@ import {
   Settings,
   Set,
   EditSet,
+  Search,
+  About,
 } from './pages';
 
 import 'react-toastify/dist/ReactToastify.css';

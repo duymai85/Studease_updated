@@ -1,5 +1,10 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from 'react-router-dom';
 
 import AddIcon from '@mui/icons-material/Add';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
@@ -23,6 +28,8 @@ const ITEM_HEIGHT = 48;
 
 export const Header = (props) => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [searchParams] = useSearchParams();
   const [anchorEl, setAnchorEl] = useState(null);
   const [anchorEl1, setAnchorEl1] = useState(null);
   const [anchorEl2, setAnchorEl2] = useState(null);
@@ -106,13 +113,22 @@ export const Header = (props) => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    navigate(`/search?query=${search}`);
+    window.location.href = `/search?query=${search}&type=all`;
   };
 
   useEffect(() => {
     getListClass();
     getListSet();
   }, []);
+
+  useEffect(() => {
+    const stringSearch = searchParams.get('query');
+    if (stringSearch) {
+      setSearch(stringSearch);
+    } else {
+      setSearch('');
+    }
+  }, [location]);
 
   // useEffect(() => {
   //   requestForToken();
@@ -296,6 +312,7 @@ export const Header = (props) => {
                   placeholder='Flash cards, quizzes, questions...'
                   required
                   onChange={(e) => setSearch(e.target.value)}
+                  value={search}
                 />
                 <button type='submit' hidden='hidden'></button>
               </div>
