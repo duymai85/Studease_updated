@@ -4,7 +4,7 @@ export const CardUser = (props) => {
   const { item } = props;
 
   return (
-    <li className='w-full lg:w-[calc(50%_-_8px)] border shadow border-gray-200 rounded-3xl p-6'>
+    <li className='w-full lg:w-[calc(50%_-_8px)] border shadow border-gray-200 rounded-3xl p-6 dark:bg-secondary-color dark:text-white dark:border-none'>
       <div className='mb-4'>
         <img
           src='https://picsum.photos/300/300'

@@ -45,7 +45,7 @@ export const Settings = () => {
   };
 
   return (
-    <div className='bg-white w-full flex flex-col gap-5 px-3 md:px-16 lg:px-12 md:flex-row text-[#161931]'>
+    <div className='bg-white w-full flex flex-col gap-5 px-3 md:px-16 lg:px-12 md:flex-row text-[#161931] dark:bg-primary-color dark:text-white'>
       <aside className='hidden py-4 md:w-1/3 lg:w-1/4 md:block'>
         <div className='sticky flex flex-col gap-2 p-4 text-sm border-r border-indigo-100 top-12'>
           <h2 className='pl-3 mb-4 text-2xl font-semibold'>Settings</h2>
@@ -101,14 +101,14 @@ export const Settings = () => {
                 <div className='mb-2 sm:mb-6'>
                   <label
                     htmlFor='name'
-                    className='block mb-2 text-sm font-medium text-gray-900'
+                    className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
                   >
                     Your name
                   </label>
                   <input
                     type='text'
                     id='name'
-                    className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5'
+                    className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:outline-none'
                     {...register('name', { required: true })}
                   />
                   {errors.name && (
@@ -121,14 +121,14 @@ export const Settings = () => {
                 <div className='mb-2 sm:mb-6'>
                   <label
                     htmlFor='email'
-                    className='block mb-2 text-sm font-medium text-gray-900 '
+                    className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
                   >
                     Your email
                   </label>
                   <input
                     type='email'
                     id='email'
-                    className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 '
+                    className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:outline-none'
                     {...register('email')}
                     disabled
                   />
@@ -137,14 +137,14 @@ export const Settings = () => {
                 <div className='mb-2 sm:mb-6'>
                   <label
                     htmlFor='phone'
-                    className='block mb-2 text-sm font-medium text-gray-900'
+                    className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
                   >
                     Your phone
                   </label>
                   <input
                     type='text'
                     id='name'
-                    className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5'
+                    className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:outline-none'
                     {...register('phone', { required: true })}
                   />
                   {errors.phone && (
@@ -157,14 +157,14 @@ export const Settings = () => {
                 <div className='mb-6'>
                   <label
                     htmlFor='phone'
-                    className='block mb-2 text-sm font-medium text-gray-900'
+                    className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
                   >
                     Country
                   </label>
                   <input
                     type='text'
                     id='name'
-                    className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5'
+                    className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:outline-none'
                     {...register('country', { required: true })}
                   />
                   {errors.country && (

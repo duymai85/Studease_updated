@@ -18,6 +18,7 @@ import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import GroupIcon from '@mui/icons-material/Group';
+import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 
 import { flashCardService } from '../services';
 import { KEY_LS } from '../utils/constant';
@@ -37,6 +38,7 @@ export const Header = (props) => {
   const [listClass, setListClass] = useState([]);
   const [listSet, setListSet] = useState([]);
   const [search, setSearch] = useState('');
+  const [theme, setTheme] = useState(null);
 
   const open = Boolean(anchorEl);
   const openEl1 = Boolean(anchorEl1);
@@ -116,10 +118,27 @@ export const Header = (props) => {
     window.location.href = `/search?query=${search}&type=all`;
   };
 
+  const handleDarkMode = () => {
+    setTheme(theme === 'dark' ? 'light' : 'dark');
+  };
+
   useEffect(() => {
     getListClass();
     getListSet();
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      setTheme('dark');
+    } else {
+      setTheme('light');
+    }
   }, []);
+
+  useEffect(() => {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [theme]);
 
   useEffect(() => {
     const stringSearch = searchParams.get('query');
@@ -144,7 +163,7 @@ export const Header = (props) => {
 
   return (
     <>
-      <div className='fixed h-16 bg-blue-800 top-0 right-0 left-0 flex items-center px-10 justify-between z-50'>
+      <div className='fixed h-16 bg-blue-800 top-0 right-0 left-0 flex items-center px-10 justify-between z-50 dark:bg-primary-color dark:border-b-[0.5px] dark:border-[#d9dde8]'>
         <div className='flex items-center justify-center'>
           <Link
             to='/home'
@@ -419,6 +438,9 @@ export const Header = (props) => {
                   >
                     <Avatar /> Profile
                   </Link>
+                </MenuItem>
+                <MenuItem onClick={handleDarkMode}>
+                  <DarkModeOutlinedIcon sx={{ marginRight: '4px' }} /> Dark mode
                 </MenuItem>
                 <Divider />
                 <MenuItem onClick={handleClose}>

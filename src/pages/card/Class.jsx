@@ -124,10 +124,10 @@ export const Class = () => {
       <CircularProgress />
     </Box>
   ) : (
-    <section className='w-10/12 m-auto pt-4 text-[#2E3856]'>
+    <section className='w-10/12 m-auto pt-4 text-[#2E3856] dark:text-white'>
       <h2 className='font-bold text-[38px]'>
         <GroupIcon
-          className='mr-2'
+          className='mr-2 dark:text-white'
           fontSize='large'
           sx={{ color: '#939bb4' }}
         ></GroupIcon>
@@ -136,17 +136,29 @@ export const Class = () => {
       <div className='flex items-center gap-2'>
         <div className='flex items-center justify-center w-10 h-10 rounded-full border border-[#d9dde8]'>
           <Link to={`/create-set?inClass=${classes.id}`}>
-            <AddIcon sx={{ color: '#586380' }}></AddIcon>
+            <AddIcon
+              sx={{ color: '#586380' }}
+              className='dark:text-white'
+            ></AddIcon>
           </Link>
         </div>
         <div className='flex items-center justify-center w-10 h-10 rounded-full border border-[#d9dde8]'>
-          <PersonAddAltIcon sx={{ color: '#586380' }}></PersonAddAltIcon>
+          <PersonAddAltIcon
+            sx={{ color: '#586380' }}
+            className='dark:text-white'
+          ></PersonAddAltIcon>
         </div>
         <div className='flex items-center justify-center w-10 h-10 rounded-full border border-[#d9dde8]'>
-          <FolderOpenIcon sx={{ color: '#586380' }}></FolderOpenIcon>
+          <FolderOpenIcon
+            sx={{ color: '#586380' }}
+            className='dark:text-white'
+          ></FolderOpenIcon>
         </div>
         <div className='flex items-center justify-center w-10 h-10 rounded-full border border-[#d9dde8]'>
-          <MoreHorizIcon sx={{ color: '#586380' }}></MoreHorizIcon>
+          <MoreHorizIcon
+            sx={{ color: '#586380' }}
+            className='dark:text-white'
+          ></MoreHorizIcon>
         </div>
       </div>
       <Box sx={{ width: '100%', marginTop: '40px' }}>
@@ -156,8 +168,18 @@ export const Class = () => {
             onChange={handleChange}
             aria-label='basic tabs example'
           >
-            <Tab label='Sets' {...a11yProps(0)} sx={{ fontWeight: '600' }} />
-            <Tab label='Members' {...a11yProps(1)} sx={{ fontWeight: '600' }} />
+            <Tab
+              label='Sets'
+              {...a11yProps(0)}
+              sx={{ fontWeight: '600' }}
+              className='dark:text-white'
+            />
+            <Tab
+              label='Members'
+              {...a11yProps(1)}
+              sx={{ fontWeight: '600' }}
+              className='dark:text-white'
+            />
           </Tabs>
         </Box>
         <CustomTabPanel value={value} index={0}>
@@ -166,7 +188,7 @@ export const Class = () => {
               <ul className='mt-4 lg:w-9/12 w-full'>
                 {listSet.map((item, index) => (
                   <li
-                    className='rounded border border-[#eaeaea] px-4 py-3 mb-3 hover:shadow-md'
+                    className='rounded border border-[#eaeaea] px-4 py-3 mb-3 hover:shadow-md dark:bg-secondary-color dark:border-none'
                     key={index}
                   >
                     <Link to={`/set/${item.id}`}>
