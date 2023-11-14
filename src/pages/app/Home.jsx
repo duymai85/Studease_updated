@@ -105,9 +105,9 @@ export const Home = (props) => {
       </div>
       <div className='mb-8'>
         <div className='font-bold text-2xl mt-5 mb-2'>
-          <h2>Achievement</h2>
+          <h2 className='dark:text-white'>Achievement</h2>
         </div>
-        <div className='rounded-lg bg-blue-300 py-10 px-10'>
+        <div className='rounded-lg bg-blue-300 py-10 px-10 dark:bg-secondary-color dark:text-white'>
           <div className='flex items-center flex-col lg:flex-row gap-10'>
             <div className='w-full lg:w-6/12 flex justify-start items-center lg:justify-end'>
               <div>
@@ -140,11 +140,11 @@ export const Home = (props) => {
               {listSet.slice(0, 5).map((item, index) => (
                 <li
                   key={index}
-                  className='p-4 border shadow border-gray-300 rounded-xl lg:w-[32%] w-full'
+                  className='p-4 border shadow border-gray-300 rounded-xl lg:w-[32%] w-full dark:bg-secondary-color dark:text-white dark:border-none'
                 >
                   <Link to={`/set/${item.id}`} className='w-full block'>
                     <h4 className='font-medium'>{item.name}</h4>
-                    <div className='bg-gray-200 rounded-3xl inline-flex items-center justify-center text-[10px] py-1 px-2 font-medium'>
+                    <div className='bg-gray-200 rounded-3xl inline-flex items-center justify-center text-[10px] py-1 px-2 font-medium dark:bg-white dark:text-black'>
                       <span>{item.data ? item.data.length : 0} Terms</span>
                     </div>
                     <div className='flex items-center gap-1 mt-12'>

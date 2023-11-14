@@ -137,7 +137,7 @@ export const Profile = () => {
       <CircularProgress />
     </Box>
   ) : (
-    <section className='pt-4 pb-20'>
+    <section className='pt-4 pb-20 dark:text-white'>
       <div className='flex items-center px-12'>
         <div className='flex items-center justify-center'>
           <img
@@ -146,7 +146,7 @@ export const Profile = () => {
             alt='Avatar'
           />
         </div>
-        <div className='ml-6 text-black'>
+        <div className='ml-6 text-black dark:text-white'>
           <h3 className='font-bold text-lg'>{userInfo.username}</h3>
           <p className='font-medium'>{userInfo.name}</p>
         </div>
@@ -158,8 +158,17 @@ export const Profile = () => {
             onChange={handleChange}
             aria-label='basic tabs example'
           >
-            <Tab label='Sets' {...a11yProps(0)} sx={{ fontWeight: '600' }} />
-            <Tab label='Classes' {...a11yProps(1)} />
+            <Tab
+              label='Sets'
+              {...a11yProps(0)}
+              sx={{ fontWeight: '600' }}
+              className='dark:text-white'
+            />
+            <Tab
+              label='Classes'
+              {...a11yProps(1)}
+              className='dark:text-white'
+            />
           </Tabs>
         </Box>
         <CustomTabPanel value={value} index={0}>
@@ -167,7 +176,7 @@ export const Profile = () => {
             <ul className='mt-4'>
               {listSet.map((item, index) => (
                 <li
-                  className='rounded border border-[#eaeaea] px-4 py-3 mb-3 hover:shadow-md flex items-center justify-between'
+                  className='rounded border border-[#eaeaea] px-4 py-3 mb-3 hover:shadow-md flex items-center justify-between dark:border-none dark:bg-secondary-color'
                   key={index}
                 >
                   <Link to={`/set/${item.id}`}>
@@ -198,7 +207,7 @@ export const Profile = () => {
             <ul className='mt-4'>
               {listClass.map((item, index) => (
                 <li
-                  className='rounded border border-[#eaeaea] px-4 py-3 mb-3 hover:shadow-md flex items-center justify-between'
+                  className='rounded border border-[#eaeaea] px-4 py-3 mb-3 hover:shadow-md flex items-center justify-between dark:border-none dark:bg-secondary-color'
                   key={index}
                 >
                   <Link to={`/class/${item.id}`}>

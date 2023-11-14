@@ -45,17 +45,17 @@ export const Login = () => {
   return (
     <section className='h-full'>
       <div className='flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen h-full lg:py-0'>
-        <div className='w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0 '>
+        <div className='w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0 dark:bg-secondary-color dark:text-white'>
           <div className='p-6 space-y-4 md:space-y-6 sm:p-8'>
             <h1 className='text-center'>
               <Link
                 to='/'
-                className='text-3xl text-blue-800 font-semibold font-mono'
+                className='text-3xl text-blue-800 font-semibold font-mono dark:text-white'
               >
                 StudEase
               </Link>
             </h1>
-            <h2 className='text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl '>
+            <h2 className='text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white'>
               Login
             </h2>
             <form
@@ -65,14 +65,14 @@ export const Login = () => {
               <div>
                 <label
                   htmlFor='username'
-                  className='block mb-2 text-sm font-medium text-gray-900 '
+                  className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
                 >
                   Username
                 </label>
                 <input
                   type='text'
                   id='username'
-                  className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5'
+                  className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:outline-none'
                   {...register('username', { required: true })}
                 />
                 {errors.username && (
@@ -84,7 +84,7 @@ export const Login = () => {
               <div>
                 <label
                   htmlFor='password'
-                  className='block mb-2 text-sm font-medium text-gray-900'
+                  className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
                 >
                   Password
                 </label>
@@ -92,7 +92,7 @@ export const Login = () => {
                   type='password'
                   id='password'
                   placeholder='••••••••'
-                  className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 '
+                  className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:outline-none'
                   {...register('password', { required: true })}
                 />
                 {errors.password && (
@@ -112,14 +112,17 @@ export const Login = () => {
                     />
                   </div>
                   <div className='ml-3 text-sm'>
-                    <label htmlFor='remember' className='text-gray-500 '>
+                    <label
+                      htmlFor='remember'
+                      className='text-gray-500 dark:text-white'
+                    >
                       Remember me
                     </label>
                   </div>
                 </div>
                 <Link
                   to='/'
-                  className='text-sm font-medium text-primary-600 hover:underline'
+                  className='text-sm font-medium text-primary-600 hover:underline dark:text-white'
                 >
                   Forgot password?
                 </Link>
@@ -130,7 +133,7 @@ export const Login = () => {
               >
                 Login
               </button>
-              <p className='text-sm font-light text-gray-500'>
+              <p className='text-sm font-light text-gray-500 dark:text-white'>
                 Don’t have an account yet?{' '}
                 <Link
                   to='/signup'

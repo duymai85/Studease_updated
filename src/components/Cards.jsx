@@ -33,21 +33,21 @@ export const Cards = ({ listTerm }) => {
       <div className='flex items-center justify-center gap-8 text-gray-700 font-medium mt-4'>
         {current > 0 ? (
           <button
-            className='flex items-center justify-center w-12 h-12 border-2 border-gray-300 rounded-full cursor-pointer'
+            className='flex items-center justify-center w-12 h-12 border-2 border-gray-300 rounded-full cursor-pointer dark:text-black dark:bg-white'
             onClick={previousCard}
           >
             <ArrowBackIcon />
           </button>
         ) : (
           <button
-            className='flex items-center justify-center w-12 h-12 border-2 border-gray-300 rounded-full cursor-pointer disabled:bg-gray-100 disabled:cursor-auto'
+            className='flex items-center justify-center w-12 h-12 border-2 border-gray-300 rounded-full cursor-pointer disabled:bg-gray-100 disabled:cursor-auto dark:disabled:bg-gray-300'
             disabled
           >
             <ArrowBackIcon />
           </button>
         )}
         {flashcardData && flashcardData.length > 0 ? (
-          <div className='cardNumber'>
+          <div className='cardNumber dark:text-white'>
             {current + 1} / {flashcardData.length}
           </div>
         ) : (
@@ -56,13 +56,13 @@ export const Cards = ({ listTerm }) => {
         {current < flashcardData.length - 1 ? (
           <button
             onClick={nextCard}
-            className='flex items-center justify-center w-12 h-12 border-2 border-gray-300 rounded-full cursor-pointer'
+            className='flex items-center justify-center w-12 h-12 border-2 border-gray-300 rounded-full cursor-pointer dark:text-black dark:bg-white dark:disabled:'
           >
             <ArrowForwardIcon />
           </button>
         ) : (
           <button
-            className='flex items-center justify-center w-12 h-12 border-2 border-gray-300 rounded-full cursor-pointer disabled:bg-gray-100 disabled:cursor-auto'
+            className='flex items-center justify-center w-12 h-12 border-2 border-gray-300 rounded-full cursor-pointer disabled:bg-gray-100 disabled:cursor-auto dark:disabled:bg-gray-300'
             disabled
           >
             <ArrowForwardIcon />

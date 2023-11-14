@@ -93,7 +93,7 @@ export const SearchAll = (props) => {
       <CircularProgress />
     </Box>
   ) : !listUser.length && !listSet.length && !listClass.length ? (
-    <div className='flex flex-col items-center'>
+    <div className='flex flex-col items-center dark:text-white'>
       <h2 className='text-3xl font-bold mb-4'>We couldn't find any results.</h2>
       <p className='text-xl font-semibold mb-4'>
         Here are some suggestions to improve your search results:
@@ -109,13 +109,15 @@ export const SearchAll = (props) => {
       {listUser.length ? (
         <div className='mb-12'>
           <div className='flex items-center justify-between mb-4'>
-            <h3 className='text-lg text-[#2E3856] font-bold'>Users</h3>
+            <h3 className='text-lg text-[#2E3856] font-bold dark:text-white'>
+              Users
+            </h3>
             <Link
               to={`/search?query=${stringSearch}&type=users}`}
               onClick={() => {
                 window.location.href = `/search?query=${stringSearch}&type=users`;
               }}
-              className='font-semibold text-blue-700'
+              className='font-semibold text-blue-700 dark:text-white'
             >
               View all
             </Link>
@@ -132,13 +134,15 @@ export const SearchAll = (props) => {
       {listSet.length ? (
         <div className='mb-12'>
           <div className='flex items-center justify-between mb-4'>
-            <h3 className='text-lg text-[#2E3856] font-bold'>Study Sets</h3>
+            <h3 className='text-lg text-[#2E3856] font-bold dark:text-white'>
+              Study Sets
+            </h3>
             <Link
               to={`/search?query=${stringSearch}&type=sets}`}
               onClick={() => {
                 window.location.href = `/search?query=${stringSearch}&type=sets`;
               }}
-              className='font-semibold text-blue-700'
+              className='font-semibold text-blue-700 dark:text-white'
             >
               View all
             </Link>
@@ -155,13 +159,15 @@ export const SearchAll = (props) => {
       {listClass.length ? (
         <div className='mb-12'>
           <div className='flex items-center justify-between mb-4'>
-            <h3 className='text-lg text-[#2E3856] font-bold'>Classes</h3>
+            <h3 className='text-lg text-[#2E3856] font-bold dark:text-white'>
+              Classes
+            </h3>
             <Link
               to={`/search?query=${stringSearch}&type=users}`}
               onClick={() => {
                 window.location.href = `/search?query=${stringSearch}&type=classes`;
               }}
-              className='font-semibold text-blue-700'
+              className='font-semibold text-blue-700 dark:text-white'
             >
               View all
             </Link>

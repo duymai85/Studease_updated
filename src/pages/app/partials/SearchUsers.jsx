@@ -41,7 +41,9 @@ export const SearchUsers = (props) => {
       {listUser.length ? (
         <div className='mb-12'>
           <div className='flex items-center justify-between mb-4'>
-            <h3 className='text-lg text-[#2E3856] font-bold'>Users</h3>
+            <h3 className='text-lg text-[#2E3856] font-bold dark:text-white'>
+              Users
+            </h3>
           </div>
           <ul className='flex flex-wrap gap-4'>
             {listUser.map((item, index) => (
@@ -50,7 +52,7 @@ export const SearchUsers = (props) => {
           </ul>
         </div>
       ) : (
-        <div className='flex flex-col items-center'>
+        <div className='flex flex-col items-center dark:text-white'>
           <h2 className='text-3xl font-bold mb-4'>
             We couldn't find any results.
           </h2>

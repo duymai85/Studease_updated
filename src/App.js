@@ -45,7 +45,11 @@ function App() {
         theme='colored'
       />
 
-      <div className={`h-full ${!isPageNotUseHeader ? 'pt-24' : ''}`}>
+      <div
+        className={`min-h-screen dark:bg-primary-color ${
+          !isPageNotUseHeader ? 'pt-24' : ''
+        } `}
+      >
         <BrowserRouter>
           {!isPageNotUseHeader ? <Header changeUI={changeUI} /> : null}
           <Routes>

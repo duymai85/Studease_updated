@@ -93,10 +93,10 @@ export const Set = () => {
       <CircularProgress />
     </Box>
   ) : (
-    <section className='lg:w-[70%] w-full m-auto px-5 pb-40'>
+    <section className='lg:w-[70%] w-full m-auto px-5 pb-40 dark:text-white'>
       <div className='mb-8'>
         <h2 className='text-3xl font-bold mb-2'>{set.name || ''}</h2>
-        <span className='text-gray-700 font-semibold'>
+        <span className='text-gray-700 font-semibold dark:text-white'>
           {set.data && (set.data.length || 0)} Terms
         </span>
       </div>
@@ -113,13 +113,15 @@ export const Set = () => {
                 />
               </div>
               <div>
-                <span className='text-xs text-gray-500'>Created by</span>
+                <span className='text-xs text-gray-500 dark:text-white'>
+                  Created by
+                </span>
                 <h5 className='font-bold'>{userInfo.username || ''}</h5>
               </div>
             </div>
             <div>
               <button
-                className='flex items-center py-2 px-4 border-2 border-gray-300 rounded-md text-sm font-semibold text-gray-600'
+                className='flex items-center py-2 px-4 border-2 border-gray-300 rounded-md text-sm font-semibold text-gray-600 dark:text-white dark:bg-secondary-color'
                 onClick={handleClickOpen}
               >
                 <IosShareIcon style={{ marginRight: '8px' }} />
@@ -130,7 +132,11 @@ export const Set = () => {
                 aria-labelledby='customized-dialog-title'
                 open={open}
               >
-                <DialogTitle sx={{ m: 0, p: 2 }} id='customized-dialog-title'>
+                <DialogTitle
+                  sx={{ m: 0, p: 2 }}
+                  id='customized-dialog-title'
+                  className='dark:bg-primary-color dark:text-white'
+                >
                   Share this set
                 </DialogTitle>
                 <IconButton
@@ -145,7 +151,7 @@ export const Set = () => {
                 >
                   <CloseIcon />
                 </IconButton>
-                <DialogContent>
+                <DialogContent className='dark:bg-primary-color dark:text-white'>
                   <div className='flex items-center mb-6'>
                     <input
                       type='text'
@@ -202,14 +208,14 @@ export const Set = () => {
               <h4 className='font-semibold text-lg'>
                 Terms in this set ({set.data && (set.data.length || 0)})
               </h4>
-              <span className='text-sm text-gray-700'>
+              <span className='text-sm text-gray-700 dark:text-white'>
                 You've begun learning these terms. Keep up the good work!
               </span>
               <ul>
                 {set.data.map((item, index) => (
-                  <li className='mt-4' key={index}>
+                  <li className='mt-4 dark:bg-secondary-color' key={index}>
                     <div className='flex items-center shadow p-4 justify-between'>
-                      <p className='text-gray-700 text-sm'>
+                      <p className='text-gray-700 text-sm dark:text-white'>
                         {item.front || ''}
                       </p>
                       <span className='text-gray-300'>|</span>
@@ -224,7 +230,7 @@ export const Set = () => {
             <div className='flex items-center justify-center mt-12'>
               <Link
                 to={`/set/edit/${id}`}
-                className='py-4 px-8 bg-blue-700 text-white rounded-md font-bold'
+                className='py-4 px-8 bg-blue-700 text-white rounded-md font-bold dark:bg-secondary-color'
               >
                 Add or Remove Terms
               </Link>
