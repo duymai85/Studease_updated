@@ -21,6 +21,7 @@ export const CreateClass = () => {
     await flashCardService
       .checkExistClass(className)
       .then((res) => {
+        console.log(res.data);
         if (res.data.length) {
           flag = true;
         }
@@ -33,9 +34,10 @@ export const CreateClass = () => {
   };
 
   const onSubmit = async (data) => {
+    console.log(data);
     const userId = JSON.parse(localStorage.getItem(KEY_LS.USER_INFO)).id || '';
     if (userId) {
-      const isExistClass = await checkClassExist(data.className);
+      const isExistClass = await checkClassExist(data.name);
       const dataClass = {
         id: uuidv4(),
         ...data,
@@ -56,7 +58,6 @@ export const CreateClass = () => {
             }
           })
           .catch((error) => {
-            console.log(error);
             toast.error('Create class failed.');
           });
       } else {
@@ -78,9 +79,9 @@ export const CreateClass = () => {
               <input
                 placeholder='Enter a class name, subject etc.'
                 className='bg-gray-300 text-white w-full px-4 py-2'
-                {...register('className', { required: true })}
+                {...register('name', { required: true })}
               ></input>
-              {errors.className && (
+              {errors.name && (
                 <span className='text-red-600 text-xs'>
                   Class name is required
                 </span>

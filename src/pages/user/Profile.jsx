@@ -6,6 +6,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import GroupIcon from '@mui/icons-material/Group';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import { flashCardService } from '../../services';
 import { KEY_LS } from '../../utils/constant';
@@ -42,8 +43,9 @@ function a11yProps(index) {
 export const Profile = () => {
   const [value, setValue] = useState(0);
   const [listClass, setListClass] = useState([]);
-  const [listSubject, setListSubject] = useState([]);
+  const [listSet, setListSet] = useState([]);
   const [userInfo, setUserInfo] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -52,15 +54,35 @@ export const Profile = () => {
   const getListClass = async () => {
     const userInfo = JSON.parse(localStorage.getItem(KEY_LS.USER_INFO));
     if (userInfo) {
+      setIsLoading(true);
       await flashCardService
         .getClassByUserId(userInfo.id)
         .then((res) => {
           if (res.data.length) {
             setListClass(res.data);
           }
+          setIsLoading(false);
         })
         .catch((error) => {
-          console.log(error);
+          setIsLoading(false);
+        });
+    }
+  };
+
+  const getListSet = async () => {
+    const userInfo = JSON.parse(localStorage.getItem(KEY_LS.USER_INFO));
+    if (userInfo) {
+      setIsLoading(true);
+      await flashCardService
+        .getSetByUserId(userInfo.id)
+        .then((res) => {
+          if (res.data.length) {
+            setListSet(res.data);
+          }
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          setIsLoading(false);
         });
     }
   };
@@ -71,9 +93,16 @@ export const Profile = () => {
       setUserInfo(userInfo);
     }
     getListClass();
+    getListSet();
   }, []);
 
-  return (
+  return isLoading ? (
+    <Box
+      sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+    >
+      <CircularProgress />
+    </Box>
+  ) : (
     <section className='pt-4'>
       <div className='flex items-center px-12'>
         <div className='flex items-center justify-center'>
@@ -95,27 +124,23 @@ export const Profile = () => {
             onChange={handleChange}
             aria-label='basic tabs example'
           >
-            <Tab
-              label='Subjects'
-              {...a11yProps(0)}
-              sx={{ fontWeight: '600' }}
-            />
+            <Tab label='Sets' {...a11yProps(0)} sx={{ fontWeight: '600' }} />
             <Tab label='Classes' {...a11yProps(1)} />
           </Tabs>
         </Box>
         <CustomTabPanel value={value} index={0}>
-          {listSubject.length ? (
+          {listSet.length ? (
             <ul className='mt-4'>
-              {listSubject.map((item, index) => (
+              {listSet.map((item, index) => (
                 <li
                   className='rounded border border-[#eaeaea] px-4 py-3 mb-3 hover:shadow-md'
                   key={index}
                 >
-                  <Link to={`/subject/${item.id}`}>
+                  <Link to={`/set/${item.id}`}>
                     <div className='flex items-center gap-4 font-medium'>
-                      <p>{item.setIds.length || 0} Sets</p>
+                      <p>{item.data ? item.data.length : 0} Term</p>
                       <span className='text-[#939bb4]'>|</span>
-                      <p className='text-[#939bb4]'>{item.school}</p>
+                      <p className='text-[#939bb4]'>{item.description || ''}</p>
                     </div>
                     <h4 className='font-bold text-xl'>
                       <GroupIcon className='mr-2'></GroupIcon>

@@ -37,7 +37,7 @@ export const flashCardService = {
   checkExistClass(className) {
     return client.request({
       method: 'get',
-      url: `${ENDPOINT.class.index}?className=${className}`,
+      url: `${ENDPOINT.class.index}?name=${className}`,
     });
   },
   getAllSet() {
