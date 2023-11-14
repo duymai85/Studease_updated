@@ -37,26 +37,23 @@ export const Home = (props) => {
   };
 
   const getListSet = async () => {
-    const userInfo = JSON.parse(localStorage.getItem(KEY_LS.USER_INFO));
-    if (userInfo) {
-      setIsLoading(true);
-      await flashCardService
-        .getAllSet()
-        .then(async (res) => {
-          if (res.data) {
-            const data = [];
-            for (const item of res.data) {
-              const name = await getNameOfUser(item.userId);
-              data.push({ ...item, userName: name });
-            }
-            setListSet(data);
+    setIsLoading(true);
+    await flashCardService
+      .getAllSet()
+      .then(async (res) => {
+        if (res.data) {
+          const data = [];
+          for (const item of res.data) {
+            const name = await getNameOfUser(item.userId);
+            data.push({ ...item, userName: name });
           }
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          setIsLoading(false);
-        });
-    }
+          setListSet(data);
+        }
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        setIsLoading(false);
+      });
   };
 
   const getNameOfUser = async (id) => {
