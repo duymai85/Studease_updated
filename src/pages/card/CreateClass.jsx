@@ -21,7 +21,6 @@ export const CreateClass = () => {
     await flashCardService
       .checkExistClass(className)
       .then((res) => {
-        console.log(res.data);
         if (res.data.length) {
           flag = true;
         }
@@ -34,7 +33,6 @@ export const CreateClass = () => {
   };
 
   const onSubmit = async (data) => {
-    console.log(data);
     const userId = JSON.parse(localStorage.getItem(KEY_LS.USER_INFO)).id || '';
     if (userId) {
       const isExistClass = await checkClassExist(data.name);
