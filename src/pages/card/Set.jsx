@@ -102,7 +102,7 @@ export const Set = () => {
       </div>
       <div className='flex flex-col lg:flex-row gap-12'>
         <div className='w-full lg:w-9/12'>
-          <Cards listTerm={set.data} />
+          <Cards listTerm={set.data} id={id} />
           <div className='flex items-center pt-8 justify-between'>
             <div className='flex items-center'>
               <div>
