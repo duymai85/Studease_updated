@@ -18,7 +18,7 @@ const messaging = getMessaging();
 export const requestForToken = () => {
   return getToken(messaging, {
     vapidKey:
-      'BH7tFJ_Nf8cDqvTe1zL-Ttbk3MYXyW1ItwI6VUqaSRjFwZa9j7RWAPint3L-WyqHCEt1pN08fCHVpsnRLrDhSrE',
+      'BOuubex4AIVjUJKpB_BG62NCOMQZEUyF2p6-4iJUWDqxdPQhBE1bEJJHHv115Xw9GtTDaJpb80iXbh0e3PLfka4',
   })
     .then((currentToken) => {
       if (currentToken) {

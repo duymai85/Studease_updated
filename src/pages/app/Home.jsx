@@ -162,7 +162,7 @@ export const Home = (props) => {
                           <span>{item.data ? item.data.length : 0} Terms</span>
                         </div>
                       </div>
-                      {checkUserLogin() && (
+                      {checkUserLogin() && listProgress.length && (
                         <div>
                           <CircleProgressWithLabel
                             value={listProgress[userInfo.id][item.id] || 0}
