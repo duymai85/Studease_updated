@@ -7,3 +7,4 @@ export * from './Cards';
 export * from './CardUser';
 export * from './CardSet';
 export * from './CardClass';
+export * from './CircleProgressWithLabel';

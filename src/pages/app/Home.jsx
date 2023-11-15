@@ -10,6 +10,8 @@ import Box from '@mui/material/Box';
 
 import { KEY_LS } from '../../utils/constant';
 import { flashCardService, userService } from '../../services';
+import { CircleProgressWithLabel } from '../../components';
+import { checkUserLogin } from '../../utils';
 
 const listDay = JSON.parse(localStorage.getItem(KEY_LS.DATE_LOGIN)) || [];
 const bookedDays = listDay.map((item) => {
@@ -22,6 +24,8 @@ export const Home = (props) => {
   const [selectedDay, setSelectedDay] = useState(today);
   const [listSet, setListSet] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [listProgress, setListProgress] = useState({});
+  const [userInfo, setUserInfo] = useState({});
 
   const isPastDate = (date) => {
     return (
@@ -73,6 +77,14 @@ export const Home = (props) => {
 
   useEffect(() => {
     getListSet();
+    const userInfo = JSON.parse(localStorage.getItem(KEY_LS.USER_INFO));
+    if (userInfo) {
+      setUserInfo(userInfo);
+    }
+    const listProgress = JSON.parse(localStorage.getItem(KEY_LS.LIST_PROGRESS));
+    if (listProgress) {
+      setListProgress(listProgress);
+    }
   }, []);
 
   return isLoading ? (
@@ -137,15 +149,26 @@ export const Home = (props) => {
           <h2 className='text-2xl font-bold mb-4'>Recent</h2>
           {listSet.length && (
             <ul className='flex items-center gap-4 flex-wrap lg:flex-row flex-col'>
-              {listSet.slice(0, 5).map((item, index) => (
+              {listSet.slice(0, 6).map((item, index) => (
                 <li
                   key={index}
                   className='p-4 border shadow border-gray-300 rounded-xl lg:w-[32%] w-full dark:bg-secondary-color dark:text-white dark:border-none'
                 >
                   <Link to={`/set/${item.id}`} className='w-full block'>
-                    <h4 className='font-medium'>{item.name}</h4>
-                    <div className='bg-gray-200 rounded-3xl inline-flex items-center justify-center text-[10px] py-1 px-2 font-medium dark:bg-white dark:text-black'>
-                      <span>{item.data ? item.data.length : 0} Terms</span>
+                    <div className='flex items-center justify-between'>
+                      <div>
+                        <h4 className='font-medium'>{item.name}</h4>
+                        <div className='bg-gray-200 rounded-3xl inline-flex items-center justify-center text-[10px] py-1 px-2 font-medium dark:bg-white dark:text-black'>
+                          <span>{item.data ? item.data.length : 0} Terms</span>
+                        </div>
+                      </div>
+                      {checkUserLogin() && (
+                        <div>
+                          <CircleProgressWithLabel
+                            value={listProgress[userInfo.id][item.id] || 0}
+                          />
+                        </div>
+                      )}
                     </div>
                     <div className='flex items-center gap-1 mt-12'>
                       <img
