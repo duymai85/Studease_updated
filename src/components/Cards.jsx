@@ -36,7 +36,11 @@ export const Cards = ({ listTerm, id }) => {
   };
 
   const handleBackToQuestion = () => {
+    const percentProgress = Math.floor(
+      ((current - 1) / flashcardData.length) * 100
+    );
     setCurrent(current - 1);
+    setOverallProgress(percentProgress);
   };
 
   useEffect(() => {
