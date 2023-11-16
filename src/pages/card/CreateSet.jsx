@@ -10,6 +10,7 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 import { KEY_LS } from '../../utils/constant';
 import { flashCardService } from '../../services';
+import { handlePushTextToNotification } from '../../utils/common';
 
 export const CreateSet = (props) => {
   const navigate = useNavigate();
@@ -78,6 +79,9 @@ export const CreateSet = (props) => {
             if (classId) {
               await updateSetToClass(res.data.id);
             }
+            handlePushTextToNotification(
+              `You have successfully created set ${res.data.name}.`
+            );
             navigate(`/set/${res.data.id}`);
           }
         })

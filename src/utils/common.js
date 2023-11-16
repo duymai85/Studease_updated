@@ -17,3 +17,13 @@ export const handleSaveDataProgress = (setId, value) => {
     localStorage.setItem(KEY_LS.LIST_PROGRESS, JSON.stringify(listProgress));
   }
 };
+
+export const handlePushTextToNotification = (text) => {
+  const listNotification =
+    JSON.parse(localStorage.getItem(KEY_LS.LIST_NOTIFICATION)) || [];
+  listNotification.push(text);
+  localStorage.setItem(
+    KEY_LS.LIST_NOTIFICATION,
+    JSON.stringify(listNotification)
+  );
+};

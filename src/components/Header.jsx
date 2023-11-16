@@ -19,6 +19,7 @@ import Logout from '@mui/icons-material/Logout';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import GroupIcon from '@mui/icons-material/Group';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
+import SnoozeIcon from '@mui/icons-material/Snooze';
 
 import { flashCardService } from '../services';
 import { KEY_LS } from '../utils/constant';
@@ -35,15 +36,18 @@ export const Header = (props) => {
   const [anchorEl1, setAnchorEl1] = useState(null);
   const [anchorEl2, setAnchorEl2] = useState(null);
   const [anchorAdd, setAnchorAdd] = useState(null);
+  const [anchorNotification, setAnchorNotification] = useState(null);
   const [listClass, setListClass] = useState([]);
   const [listSet, setListSet] = useState([]);
   const [search, setSearch] = useState('');
   const [theme, setTheme] = useState(null);
+  const [listNotification, setListNotification] = useState([]);
 
   const open = Boolean(anchorEl);
   const openEl1 = Boolean(anchorEl1);
   const openEl2 = Boolean(anchorEl2);
   const openAdd = Boolean(anchorAdd);
+  const openNotification = Boolean(anchorNotification);
 
   const handleClick = (event) => {
     const isLogged = checkUserLogin();
@@ -74,6 +78,12 @@ export const Header = (props) => {
   };
   const handleCloseAdd = () => {
     setAnchorAdd(null);
+  };
+  const handleClickNotification = (event) => {
+    setAnchorNotification(event.currentTarget);
+  };
+  const handleCloseNotification = () => {
+    setAnchorNotification(null);
   };
 
   const getListClass = async () => {
@@ -147,6 +157,9 @@ export const Header = (props) => {
     } else {
       setSearch('');
     }
+    const listNotification =
+      JSON.parse(localStorage.getItem(KEY_LS.LIST_NOTIFICATION)) || [];
+    setListNotification(listNotification);
   }, [location]);
 
   useEffect(() => {
@@ -176,7 +189,7 @@ export const Header = (props) => {
               About
             </Link>
             <div className='relative'>
-              <div
+              <button
                 aria-controls={openEl1 ? 'basic-menu' : undefined}
                 aria-haspopup='true'
                 aria-expanded={openEl1 ? 'true' : undefined}
@@ -199,7 +212,7 @@ export const Header = (props) => {
                     d='m1 1 4 4 4-4'
                   />
                 </svg>
-              </div>
+              </button>
               <Menu
                 id='long-menu'
                 anchorEl={anchorEl1}
@@ -236,7 +249,7 @@ export const Header = (props) => {
               </Menu>
             </div>
             <div className='relative'>
-              <div
+              <button
                 aria-controls={openEl2 ? 'basic-menu' : undefined}
                 aria-haspopup='true'
                 aria-expanded={openEl2 ? 'true' : undefined}
@@ -259,7 +272,7 @@ export const Header = (props) => {
                     d='m1 1 4 4 4-4'
                   />
                 </svg>
-              </div>
+              </button>
               <Menu
                 id='long-menu-class'
                 anchorEl={anchorEl2}
@@ -380,9 +393,59 @@ export const Header = (props) => {
               </Menu>
             )}
           </div>
-          <div className='bg-white rounded-full w-10 h-10 inline-flex justify-center items-center'>
-            <NotificationsNoneIcon />
-          </div>
+          <button
+            aria-controls={openNotification ? 'basic-menu' : undefined}
+            aria-haspopup='true'
+            aria-expanded={openNotification ? 'true' : undefined}
+            onClick={handleClickNotification}
+            className='cursor-pointer'
+          >
+            <div className='bg-white rounded-full w-10 h-10 inline-flex justify-center items-center relative'>
+              <NotificationsNoneIcon />
+              {listNotification.length ? (
+                <span className='absolute top-[6px] right-[7px] w-[14px] h-[14px] rounded-full inline-flex items-center justify-center text-[10px] font-semibold bg-red-700 text-white '>
+                  {listNotification.length}
+                </span>
+              ) : (
+                <></>
+              )}
+            </div>
+          </button>
+          <Menu
+            id='long-notification'
+            anchorEl={anchorNotification}
+            open={openNotification}
+            onClose={handleCloseNotification}
+            MenuListProps={{
+              'aria-labelledby': 'basic-button',
+            }}
+            PaperProps={{
+              style: {
+                maxHeight: ITEM_HEIGHT * 4.5,
+                // width: '40ch',
+              },
+            }}
+          >
+            {listNotification.length ? (
+              listNotification.map((item, index) => (
+                <MenuItem
+                  onClick={handleCloseNotification}
+                  key={index}
+                  sx={{
+                    paddingTop: '20px',
+                    paddingBottom: '20px',
+                  }}
+                >
+                  <div className='flex items-center gap-2'>
+                    <SnoozeIcon />
+                    <p className='font-bold'>{item}</p>
+                  </div>
+                </MenuItem>
+              ))
+            ) : (
+              <p className='text-center py-3'>No notification</p>
+            )}
+          </Menu>
           <div className='relative'>
             <button
               className='bg-white rounded-full w-10 h-10 inline-flex justify-center items-center'
