@@ -6,6 +6,7 @@ import { flashCardService } from '../../services';
 import { v4 as uuidv4 } from 'uuid';
 
 import { KEY_LS } from '../../utils/constant';
+import { handlePushTextToNotification } from '../../utils/common';
 
 export const CreateClass = () => {
   const {
@@ -50,6 +51,9 @@ export const CreateClass = () => {
           .then((res) => {
             if (res.data) {
               toast.success('Create class successfully.');
+              handlePushTextToNotification(
+                `You have successfully created class ${res.data.name}.`
+              );
               navigate('/');
             } else {
               toast.error('Create class failed.');
