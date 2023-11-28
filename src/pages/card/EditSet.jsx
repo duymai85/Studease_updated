@@ -37,16 +37,14 @@ export const EditSet = () => {
   });
 
   const onSubmit = async (data) => {
-    const userId = JSON.parse(localStorage.getItem(KEY_LS.USER_INFO)).id || '';
+    const accessToken = JSON.parse(localStorage.getItem(KEY_LS.ACCESS_TOKEN));
 
-    if (userId) {
+    if (accessToken) {
       const dataSet = {
         ...setItem,
         name: data.title,
         description: data.description,
         data: data.list,
-        created_at: Date.now(),
-        updated_at: Date.now(),
       };
       await flashCardService
         .updateSet(dataSet)

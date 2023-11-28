@@ -19,7 +19,8 @@ import IosShareIcon from '@mui/icons-material/IosShare';
 
 import { flashCardService } from '../../services';
 import { Cards } from '../../components/Cards';
-import { KEY_LS } from '../../utils/constant';
+import { AVATAR_EMPTY, KEY_LS } from '../../utils/constant';
+import { parseJwt } from '../../utils';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -79,9 +80,10 @@ export const Set = () => {
   };
 
   useEffect(() => {
-    const userInfo = JSON.parse(localStorage.getItem(KEY_LS.USER_INFO));
+    const accesToken = JSON.parse(localStorage.getItem(KEY_LS.ACCESS_TOKEN));
     if (userInfo) {
-      setUserInfo(userInfo);
+      const user = parseJwt(accesToken);
+      setUserInfo(user);
     }
     getSetById();
   }, []);
@@ -107,16 +109,20 @@ export const Set = () => {
             <div className='flex items-center'>
               <div>
                 <img
-                  src='https://picsum.photos/300/300'
+                  src={set?.user?.photo || AVATAR_EMPTY}
                   alt='Avatar'
                   className='w-12 h-12 rounded-full mr-2'
+                  onError={(e) => {
+                    e.target['onerror'] = null;
+                    e.target['src'] = AVATAR_EMPTY;
+                  }}
                 />
               </div>
               <div>
                 <span className='text-xs text-gray-500 dark:text-white'>
                   Created by
                 </span>
-                <h5 className='font-bold'>{userInfo.username || ''}</h5>
+                <h5 className='font-bold'>{set?.user?.name || ''}</h5>
               </div>
             </div>
             <div>
@@ -226,7 +232,7 @@ export const Set = () => {
               </ul>
             </div>
           )}
-          {set.userId === userInfo.id ? (
+          {set?.user?.id === userInfo.sub ? (
             <div className='flex items-center justify-center mt-12'>
               <Link
                 to={`/set/edit/${id}`}

@@ -16,8 +16,8 @@ export const SearchClasses = (props) => {
     await flashCardService
       .getAllClassByName(stringSearch)
       .then((res) => {
-        if (res.data.length) {
-          setListClass(res.data);
+        if (res.data) {
+          setListClass(res.data.classes);
         }
         setIsLoading(false);
       })

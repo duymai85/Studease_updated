@@ -3,4 +3,7 @@ export const KEY_LS = {
   DATE_LOGIN: 'DATE_LOGIN',
   LIST_PROGRESS: 'LIST_PROGRESS',
   LIST_NOTIFICATION: 'LIST_NOTIFICATION',
+  ACCESS_TOKEN: 'ACCESS_TOKEN',
 };
+
+export const AVATAR_EMPTY = 'https://picsum.photos/300/300';

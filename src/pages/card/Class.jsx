@@ -94,15 +94,15 @@ export const Class = () => {
   };
 
   const getClassById = async () => {
-    const userInfo = JSON.parse(localStorage.getItem(KEY_LS.USER_INFO));
-    if (userInfo) {
+    const accessToken = JSON.parse(localStorage.getItem(KEY_LS.ACCESS_TOKEN));
+    if (accessToken) {
       setIsLoading(true);
       await flashCardService
         .getClassById(id)
         .then(async (res) => {
-          if (res.data.length) {
-            const sets = await getListSet(res.data[0].setIds || []);
-            setClasses(res.data[0]);
+          if (res.data) {
+            const sets = await getListSet(res.data.setIds || []);
+            setClasses(res.data);
             setListSet(sets);
           }
           setIsLoading(false);

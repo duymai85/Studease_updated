@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { flashCardService } from '../../services';
-import { v4 as uuidv4 } from 'uuid';
 
 import { KEY_LS } from '../../utils/constant';
 import { handlePushTextToNotification } from '../../utils/common';
@@ -16,62 +15,34 @@ export const CreateClass = () => {
   } = useForm();
   const navigate = useNavigate();
 
-  const checkClassExist = async (className) => {
-    let flag = false;
-
-    await flashCardService
-      .checkExistClass(className)
-      .then((res) => {
-        if (res.data.length) {
-          flag = true;
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-    return flag;
-  };
-
   const onSubmit = async (data) => {
-    const userId = JSON.parse(localStorage.getItem(KEY_LS.USER_INFO)).id || '';
-    if (userId) {
-      const isExistClass = await checkClassExist(data.name);
+    const accessToken = JSON.parse(localStorage.getItem(KEY_LS.ACCESS_TOKEN));
+    if (accessToken) {
       const dataClass = {
-        id: uuidv4(),
         ...data,
-        userId,
         setIds: [],
-        created_at: Date.now(),
-        updated_at: Date.now(),
       };
-      if (!isExistClass) {
-        await flashCardService
-          .createClass(dataClass)
-          .then((res) => {
-            if (res.data) {
-              toast.success('Create class successfully.');
-              handlePushTextToNotification(
-                `You have successfully created class ${res.data.name}.`
-              );
-              navigate('/');
-            } else {
-              toast.error('Create class failed.');
-            }
-          })
-          .catch((error) => {
-            toast.error('Create class failed.');
-          });
-      } else {
-        toast.error('Class already exists.');
-      }
+      await flashCardService
+        .createClass(dataClass)
+        .then((res) => {
+          if (res.data) {
+            toast.success('Create class successfully.');
+            handlePushTextToNotification(
+              `You have successfully created class ${res.data.name}.`
+            );
+            navigate('/');
+          }
+        })
+        .catch((error) => {
+          toast.error('Create class failed.');
+        });
     }
   };
 
   return (
     <>
       <div className='h-[90vh] flex items-center justify-center dark:text-white'>
-        <div className='w-1/3 p-10 shadow-xl dark:bg-secondary-color'>
+        <div className='w-[90%] lg:w-1/3 p-10 shadow-xl dark:bg-secondary-color'>
           <h1 className='text-2xl mb-4 font-bold'>Create a new class</h1>
           <p>
             Create your own class and share them with your classmates/students

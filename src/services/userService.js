@@ -17,27 +17,7 @@ export const userService = {
   getAllUserByUsername(username) {
     return client.request({
       method: 'get',
-      url: `${ENDPOINT.user.index}?username_like=${username}`,
-    });
-  },
-  login(data) {
-    const { username, password } = data;
-    return client.request({
-      method: 'get',
-      url: `${ENDPOINT.user.index}?username=${username}&password=${password}`,
-    });
-  },
-  register(data) {
-    return client.request({
-      method: 'post',
-      url: `${ENDPOINT.user.index}`,
-      data,
-    });
-  },
-  checkExistUser(username) {
-    return client.request({
-      method: 'get',
-      url: `${ENDPOINT.user.index}?username=${username}`,
+      url: `${ENDPOINT.user.index}?search=${username}`,
     });
   },
   updateUser(data) {

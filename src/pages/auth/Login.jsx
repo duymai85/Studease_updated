@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
@@ -8,11 +8,10 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
-import { userService } from '../../services';
+import { authService } from '../../services';
 import { KEY_LS } from '../../utils/constant';
 
 export const Login = () => {
-  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -20,25 +19,20 @@ export const Login = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    await userService
+    await authService
       .login(data)
       .then((res) => {
-        if (res.data.length) {
+        if (res.data) {
           toast.success('Login successfully.');
-          localStorage.setItem(KEY_LS.USER_INFO, JSON.stringify(res.data[0]));
-          const dateLogin =
-            JSON.parse(localStorage.getItem(KEY_LS.DATE_LOGIN)) || [];
           localStorage.setItem(
-            KEY_LS.DATE_LOGIN,
-            JSON.stringify([...dateLogin, new Date()])
+            KEY_LS.ACCESS_TOKEN,
+            JSON.stringify(res.data.access_token)
           );
-          navigate('/');
-        } else {
-          toast.error('Account does not exist.');
+          window.location.href = '/';
         }
       })
       .catch((error) => {
-        toast.error('Login failed.');
+        toast.error(error?.response?.data?.detail || 'Login failed.');
       });
   };
 

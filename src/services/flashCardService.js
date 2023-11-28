@@ -11,19 +11,19 @@ export const flashCardService = {
   getClassById(id) {
     return client.request({
       method: 'get',
-      url: `${ENDPOINT.class.index}?id=${id}`,
+      url: `${ENDPOINT.class.index}/${id}`,
     });
   },
   getClassByUserId(userId) {
     return client.request({
       method: 'get',
-      url: `${ENDPOINT.class.index}?userId=${userId}`,
+      url: `${ENDPOINT.class.byUser}/${userId}`,
     });
   },
   getAllClassByName(name) {
     return client.request({
       method: 'get',
-      url: `${ENDPOINT.class.index}?name_like=${name}`,
+      url: `${ENDPOINT.class.index}?search=${name}`,
     });
   },
   createClass(data) {
@@ -46,12 +46,6 @@ export const flashCardService = {
       data,
     });
   },
-  checkExistClass(className) {
-    return client.request({
-      method: 'get',
-      url: `${ENDPOINT.class.index}?name=${className}`,
-    });
-  },
   getAllSet() {
     return client.request({
       method: 'get',
@@ -67,13 +61,13 @@ export const flashCardService = {
   getSetByUserId(userId) {
     return client.request({
       method: 'get',
-      url: `${ENDPOINT.set.index}?userId=${userId}`,
+      url: `${ENDPOINT.set.byUser}/${userId}`,
     });
   },
   getAllSetByName(name) {
     return client.request({
       method: 'get',
-      url: `${ENDPOINT.set.index}?name_like=${name}`,
+      url: `${ENDPOINT.set.index}?search=${name}`,
     });
   },
   createSet(data) {

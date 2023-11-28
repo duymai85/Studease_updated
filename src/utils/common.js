@@ -1,13 +1,13 @@
 import { KEY_LS } from './constant';
+import { parseJwt } from './index';
 
 export const handleSaveDataProgress = (setId, value) => {
-  const userInfo = JSON.parse(localStorage.getItem(KEY_LS.USER_INFO));
+  const accessToken = JSON.parse(localStorage.getItem(KEY_LS.ACCESS_TOKEN));
   let listProgress =
     JSON.parse(localStorage.getItem(KEY_LS.LIST_PROGRESS)) || {};
 
-  if (userInfo && setId) {
-    console.log('chaay chua', setId, value, userInfo);
-    const userId = userInfo.id;
+  if (accessToken && setId) {
+    const userId = parseJwt(accessToken).sub;
 
     if (!listProgress[userId]) {
       listProgress[userId] = {};
@@ -19,11 +19,20 @@ export const handleSaveDataProgress = (setId, value) => {
 };
 
 export const handlePushTextToNotification = (text) => {
+  const accessToken = JSON.parse(localStorage.getItem(KEY_LS.ACCESS_TOKEN));
   const listNotification =
-    JSON.parse(localStorage.getItem(KEY_LS.LIST_NOTIFICATION)) || [];
-  listNotification.push(text);
-  localStorage.setItem(
-    KEY_LS.LIST_NOTIFICATION,
-    JSON.stringify(listNotification)
-  );
+    JSON.parse(localStorage.getItem(KEY_LS.LIST_NOTIFICATION)) || {};
+  if (accessToken) {
+    const userId = parseJwt(accessToken).sub;
+
+    if (!listNotification[userId]) {
+      listNotification[userId] = [];
+    }
+    listNotification[userId].push(text);
+
+    localStorage.setItem(
+      KEY_LS.LIST_NOTIFICATION,
+      JSON.stringify(listNotification)
+    );
+  }
 };

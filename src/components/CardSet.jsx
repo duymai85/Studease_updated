@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { AVATAR_EMPTY } from '../utils/constant';
 
 export const CardSet = (props) => {
   const { item } = props;
@@ -14,11 +15,15 @@ export const CardSet = (props) => {
         </div>
         <div className='flex items-center gap-1 mt-12'>
           <img
-            src='https://picsum.photos/300/300'
+            src={item.user.photo || AVATAR_EMPTY}
             alt='Avatar'
             className='w-6 h-6 rounded-full mr-2'
+            onError={(e) => {
+              e.target['onerror'] = null;
+              e.target['src'] = AVATAR_EMPTY;
+            }}
           />
-          <h5 className='font-medium text-xs'>{item.userName || ''}</h5>
+          <h5 className='font-medium text-xs'>{item.user.name || ''}</h5>
         </div>
       </Link>
     </li>

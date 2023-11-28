@@ -29,7 +29,7 @@ export const Search = () => {
       <div className='font-bold text-2xl dark:text-white'>
         Results for "{stringSearch}"
       </div>
-      <ul className='flex w-2/5 justify-between mt-10'>
+      <ul className='flex gap-2 mt-10'>
         <li
           className={`px-4 py-1 border-2 rounded-xl shadow-2xl ${
             typeSearch === 'all'
