@@ -27,4 +27,11 @@ export const userService = {
       data,
     });
   },
+  changePassword(data) {
+    return client.request({
+      method: 'post',
+      url: `${ENDPOINT.user.changePassword}`,
+      data,
+    });
+  },
 };
