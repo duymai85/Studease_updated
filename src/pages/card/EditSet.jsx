@@ -11,6 +11,7 @@ import Box from '@mui/material/Box';
 
 import { KEY_LS } from '../../utils/constant';
 import { flashCardService } from '../../services';
+import { cloudinary } from '../../config/cloudinary';
 
 export const EditSet = () => {
   const navigate = useNavigate();
@@ -60,13 +61,30 @@ export const EditSet = () => {
     }
   };
 
-  const handleImage = (e) => {
-    const files = e.target.files;
-    const fileName = files[0].name;
-    const element = e.target;
-    const index = element.getAttribute('data-id');
+  const handleImage = async (e) => {
+    const index = e.target.getAttribute('data-id');
+    const file = e.target.files[0];
+    const data = new FormData();
+    data.append('file', file);
+    data.append('upload_preset', cloudinary.REACT_APP_CLOUDINARY_UPLOAD_PRESET);
+    data.append('cloud_name', cloudinary.REACT_APP_CLOUDINARY_CLOUD_NAME);
+    data.append('folder', 'Cloudinary-React');
 
-    setValue(`list.${index}.image`, fileName);
+    try {
+      const response = await fetch(
+        `https://api.cloudinary.com/v1_1/${cloudinary.REACT_APP_CLOUDINARY_CLOUD_NAME}/image/upload`,
+        {
+          method: 'POST',
+          body: data,
+        }
+      );
+      const res = await response.json();
+      if (res.url) {
+        setValue(`list.${index}.image`, res.url);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const getSetById = async () => {
@@ -195,6 +213,11 @@ export const EditSet = () => {
                 </label>
               </div>
             </div>
+            {field.image && (
+              <div className='w-[300px] object-cover m-auto shadow mb-4'>
+                <img src={field.image} alt='' />
+              </div>
+            )}
             <div className='btn-box'>
               {fields.length - 1 === index && (
                 <button

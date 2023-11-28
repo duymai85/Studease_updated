@@ -14,9 +14,9 @@ export const Card = ({ card }) => {
         <p>{card.front}</p>
         {card.image && (
           <img
-            src={`../../../assets/${card.image}`}
+            src={card.image}
             alt={card.front}
-            className='w-[300px] h-[200px] object-cover mt-3'
+            className='w-[300px] h-[200px] object-cover mt-4'
           />
         )}
       </div>

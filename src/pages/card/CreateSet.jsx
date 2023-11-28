@@ -10,6 +10,7 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { KEY_LS } from '../../utils/constant';
 import { flashCardService } from '../../services';
 import { handlePushTextToNotification } from '../../utils/common';
+import { cloudinary } from '../../config/cloudinary';
 
 export const CreateSet = (props) => {
   const navigate = useNavigate();
@@ -85,13 +86,30 @@ export const CreateSet = (props) => {
     }
   };
 
-  const handleImage = (e) => {
-    const files = e.target.files;
-    const fileName = files[0].name;
-    const element = e.target;
-    const index = element.getAttribute('data-id');
+  const handleImage = async (e) => {
+    const index = e.target.getAttribute('data-id');
+    const file = e.target.files[0];
+    const data = new FormData();
+    data.append('file', file);
+    data.append('upload_preset', cloudinary.REACT_APP_CLOUDINARY_UPLOAD_PRESET);
+    data.append('cloud_name', cloudinary.REACT_APP_CLOUDINARY_CLOUD_NAME);
+    data.append('folder', 'Cloudinary-React');
 
-    setValue(`list.${index}.image`, fileName);
+    try {
+      const response = await fetch(
+        `https://api.cloudinary.com/v1_1/${cloudinary.REACT_APP_CLOUDINARY_CLOUD_NAME}/image/upload`,
+        {
+          method: 'POST',
+          body: data,
+        }
+      );
+      const res = await response.json();
+      if (res.url) {
+        setValue(`list.${index}.image`, res.url);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
