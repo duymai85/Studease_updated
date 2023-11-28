@@ -1,8 +1,8 @@
 import { KEY_LS } from './constant';
 
 export const checkUserLogin = () => {
-  const userInfo = JSON.parse(localStorage.getItem(KEY_LS.ACCESS_TOKEN));
-  if (userInfo) {
+  const accessToken = JSON.parse(localStorage.getItem(KEY_LS.ACCESS_TOKEN));
+  if (accessToken) {
     return true;
   }
   return false;
