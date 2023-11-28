@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
-import { v4 as uuidv4 } from 'uuid';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
@@ -43,9 +42,8 @@ export const CreateSet = (props) => {
   const updateSetToClass = async (id) => {
     if (id) {
       await flashCardService.getClassById(classId).then(async (res) => {
-        if (res.data.length) {
-          console.log(res.data[0]);
-          const dataClass = res.data[0];
+        if (res.data) {
+          const dataClass = res.data;
           dataClass.setIds = [...dataClass.setIds, id];
           await flashCardService
             .updateClass(dataClass)
@@ -59,17 +57,13 @@ export const CreateSet = (props) => {
   };
 
   const onSubmit = async (data) => {
-    const userId = JSON.parse(localStorage.getItem(KEY_LS.USER_INFO)).id || '';
+    const accessToken = JSON.parse(localStorage.getItem(KEY_LS.ACCESS_TOKEN));
 
-    if (userId) {
+    if (accessToken) {
       const dataSet = {
-        id: uuidv4(),
-        userId: userId,
         name: data.title,
         description: data.description,
         data: data.list,
-        created_at: Date.now(),
-        updated_at: Date.now(),
       };
       await flashCardService
         .createSet(dataSet)

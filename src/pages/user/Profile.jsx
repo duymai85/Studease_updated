@@ -10,8 +10,9 @@ import GroupIcon from '@mui/icons-material/Group';
 import CircularProgress from '@mui/material/CircularProgress';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-import { flashCardService } from '../../services';
-import { KEY_LS } from '../../utils/constant';
+import { flashCardService, userService } from '../../services';
+import { AVATAR_EMPTY, KEY_LS } from '../../utils/constant';
+import { parseJwt } from '../../utils';
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -54,14 +55,15 @@ export const Profile = () => {
   };
 
   const getListClass = async () => {
-    const userInfo = JSON.parse(localStorage.getItem(KEY_LS.USER_INFO));
-    if (userInfo) {
+    const accessToken = JSON.parse(localStorage.getItem(KEY_LS.ACCESS_TOKEN));
+    if (accessToken) {
+      const userInfo = parseJwt(accessToken);
       setIsLoading(true);
       await flashCardService
-        .getClassByUserId(userInfo.id)
+        .getClassByUserId(userInfo.sub)
         .then((res) => {
-          if (res.data.length) {
-            setListClass(res.data);
+          if (res.data) {
+            setListClass(res.data.classes);
           }
           setIsLoading(false);
         })
@@ -72,14 +74,15 @@ export const Profile = () => {
   };
 
   const getListSet = async () => {
-    const userInfo = JSON.parse(localStorage.getItem(KEY_LS.USER_INFO));
-    if (userInfo) {
+    const accessToken = JSON.parse(localStorage.getItem(KEY_LS.ACCESS_TOKEN));
+    if (accessToken) {
       setIsLoading(true);
+      const userInfo = parseJwt(accessToken);
       await flashCardService
-        .getSetByUserId(userInfo.id)
+        .getSetByUserId(userInfo.sub)
         .then((res) => {
-          if (res.data.length) {
-            setListSet(res.data);
+          if (res.data) {
+            setListSet(res.data.sets);
           }
           setIsLoading(false);
         })
@@ -94,10 +97,8 @@ export const Profile = () => {
       await flashCardService
         .deleteSet(id)
         .then((res) => {
-          if (res.status === 200) {
-            setListSet((prev) => prev.filter((item) => item.id !== id));
-            toast.success('Delete set successfully.');
-          }
+          setListSet((prev) => prev.filter((item) => item.id !== id));
+          toast.success('Delete set successfully.');
         })
         .catch((error) => {
           toast.error('Delete set failed.');
@@ -110,10 +111,8 @@ export const Profile = () => {
       await flashCardService
         .deleteClass(id)
         .then((res) => {
-          if (res.status === 200) {
-            setListClass((prev) => prev.filter((item) => item.id !== id));
-            toast.success('Delete class successfully.');
-          }
+          setListClass((prev) => prev.filter((item) => item.id !== id));
+          toast.success('Delete class successfully.');
         })
         .catch((error) => {
           toast.error('Delete class failed.');
@@ -121,11 +120,23 @@ export const Profile = () => {
     }
   };
 
+  const getUserInfo = async () => {
+    setIsLoading(true);
+    await userService
+      .getUserById('me')
+      .then((res) => {
+        if (res.data) {
+          setUserInfo(res.data.user);
+        }
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        setIsLoading(false);
+      });
+  };
+
   useEffect(() => {
-    const userInfo = JSON.parse(localStorage.getItem(KEY_LS.USER_INFO));
-    if (userInfo) {
-      setUserInfo(userInfo);
-    }
+    getUserInfo();
     getListClass();
     getListSet();
   }, []);
@@ -141,9 +152,13 @@ export const Profile = () => {
       <div className='flex items-center px-12'>
         <div className='flex items-center justify-center'>
           <img
-            src='https://picsum.photos/300/300'
+            src={userInfo.photo || AVATAR_EMPTY}
             className='w-16 h-16 object-cover rounded-full'
             alt='Avatar'
+            onError={(e) => {
+              e.target['onerror'] = null;
+              e.target['src'] = AVATAR_EMPTY;
+            }}
           />
         </div>
         <div className='ml-6 text-black dark:text-white'>

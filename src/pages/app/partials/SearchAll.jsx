@@ -20,8 +20,8 @@ export const SearchAll = (props) => {
     await userService
       .getAllUserByUsername(stringSearch)
       .then((res) => {
-        if (res.data.length) {
-          setListUser(res.data);
+        if (res.data) {
+          setListUser(res.data.users);
         }
         setIsLoading(false);
       })
@@ -35,8 +35,8 @@ export const SearchAll = (props) => {
     await flashCardService
       .getAllClassByName(stringSearch)
       .then((res) => {
-        if (res.data.length) {
-          setListClass(res.data);
+        if (res.data) {
+          setListClass(res.data.classes);
         }
         setIsLoading(false);
       })
@@ -49,35 +49,15 @@ export const SearchAll = (props) => {
     setIsLoading(true);
     await flashCardService
       .getAllSetByName(stringSearch)
-      .then(async (res) => {
-        if (res.data.length) {
-          const data = [];
-          for (const item of res.data) {
-            const name = await getNameOfUser(item.userId);
-            data.push({ ...item, userName: name });
-          }
-          setListSet(data);
+      .then((res) => {
+        if (res.data) {
+          setListSet(res.data.sets);
         }
         setIsLoading(false);
       })
       .catch((error) => {
         setIsLoading(false);
       });
-  };
-
-  const getNameOfUser = async (id) => {
-    let name = '';
-    if (id) {
-      await userService
-        .getUserById(id)
-        .then((res) => {
-          if (res.data) {
-            name = res.data.username;
-          }
-        })
-        .catch((error) => {});
-    }
-    return name;
   };
 
   useEffect(() => {

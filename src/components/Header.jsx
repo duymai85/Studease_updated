@@ -23,7 +23,7 @@ import SnoozeIcon from '@mui/icons-material/Snooze';
 
 import { flashCardService } from '../services';
 import { KEY_LS } from '../utils/constant';
-import { checkUserLogin } from '../utils/index';
+import { checkUserLogin, parseJwt } from '../utils/index';
 // import { requestForToken, onMessageListener } from '../config/firebase';
 
 const ITEM_HEIGHT = 48;
@@ -41,7 +41,8 @@ export const Header = (props) => {
   const [listSet, setListSet] = useState([]);
   const [search, setSearch] = useState('');
   const [theme, setTheme] = useState(null);
-  const [listNotification, setListNotification] = useState([]);
+  const [listNotification, setListNotification] = useState({});
+  const [userId, setUserId] = useState('');
 
   const open = Boolean(anchorEl);
   const openEl1 = Boolean(anchorEl1);
@@ -87,13 +88,14 @@ export const Header = (props) => {
   };
 
   const getListClass = async () => {
-    const userInfo = JSON.parse(localStorage.getItem(KEY_LS.USER_INFO));
-    if (userInfo) {
+    const accessToken = JSON.parse(localStorage.getItem(KEY_LS.ACCESS_TOKEN));
+    if (accessToken) {
+      const userInfo = parseJwt(accessToken);
       await flashCardService
-        .getClassByUserId(userInfo.id)
+        .getClassByUserId(userInfo.sub)
         .then((res) => {
-          if (res.data.length) {
-            setListClass(res.data);
+          if (res.data) {
+            setListClass(res.data.classes);
           }
         })
         .catch((error) => {
@@ -103,13 +105,14 @@ export const Header = (props) => {
   };
 
   const getListSet = async () => {
-    const userInfo = JSON.parse(localStorage.getItem(KEY_LS.USER_INFO));
-    if (userInfo) {
+    const accessToken = JSON.parse(localStorage.getItem(KEY_LS.ACCESS_TOKEN));
+    if (accessToken) {
+      const userInfo = parseJwt(accessToken);
       await flashCardService
-        .getSetByUserId(userInfo.id)
+        .getSetByUserId(userInfo.sub)
         .then((res) => {
-          if (res.data.length) {
-            setListSet(res.data);
+          if (res.data) {
+            setListSet(res.data.sets);
           }
         })
         .catch((error) => {
@@ -119,8 +122,8 @@ export const Header = (props) => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem(KEY_LS.USER_INFO);
-    navigate('/');
+    localStorage.removeItem(KEY_LS.ACCESS_TOKEN);
+    window.location.href = '/';
   };
 
   const handleSearch = (e) => {
@@ -133,6 +136,11 @@ export const Header = (props) => {
   };
 
   useEffect(() => {
+    const accessToken = JSON.parse(localStorage.getItem(KEY_LS.ACCESS_TOKEN));
+    if (accessToken) {
+      const userInfo = parseJwt(accessToken);
+      setUserId(userInfo.sub);
+    }
     getListClass();
     getListSet();
     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -402,9 +410,9 @@ export const Header = (props) => {
           >
             <div className='bg-white rounded-full w-10 h-10 inline-flex justify-center items-center relative'>
               <NotificationsNoneIcon />
-              {listNotification.length ? (
+              {listNotification[userId] && listNotification[userId].length ? (
                 <span className='absolute top-[6px] right-[7px] w-[14px] h-[14px] rounded-full inline-flex items-center justify-center text-[10px] font-semibold bg-red-700 text-white '>
-                  {listNotification.length}
+                  {listNotification[userId].length}
                 </span>
               ) : (
                 <></>
@@ -422,12 +430,14 @@ export const Header = (props) => {
             PaperProps={{
               style: {
                 maxHeight: ITEM_HEIGHT * 4.5,
+                paddingLeft: '16px',
+                paddingRight: '16px',
                 // width: '40ch',
               },
             }}
           >
-            {listNotification.length ? (
-              listNotification.map((item, index) => (
+            {listNotification[userId] && listNotification[userId].length ? (
+              listNotification[userId].map((item, index) => (
                 <MenuItem
                   onClick={handleCloseNotification}
                   key={index}

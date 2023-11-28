@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import Confetti from 'react-confetti';
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import Confetti from 'react-confetti';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 import { Card } from './Card';
 import { handleSaveDataProgress } from '../utils/common';
@@ -12,11 +14,9 @@ export const Cards = ({ listTerm, id }) => {
   const [flashcardData, setflashcardData] = useState([]);
   const [overallProgress, setOverallProgress] = useState(0);
 
-  const cards = flashcardData.map((card) => {
+  const cards = flashcardData?.map((card) => {
     return <Card card={card} key={card.id} />;
   });
-
-  const loading = <div className='loading'>Loading flashcard content...</div>;
 
   // navigation in cards
   const [current, setCurrent] = useState(0);
@@ -54,11 +54,21 @@ export const Cards = ({ listTerm, id }) => {
   return (
     <>
       <div className='pb-8'>
-        {current < flashcardData.length ? (
+        {current < flashcardData?.length ? (
           <>
-            {flashcardData && flashcardData.length > 0
-              ? cards[current]
-              : loading}
+            {flashcardData && flashcardData?.length > 0 ? (
+              cards[current]
+            ) : (
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <CircularProgress />
+              </Box>
+            )}
             <div className='flex items-center justify-center gap-8 text-gray-700 font-medium mt-4 pb-8'>
               {current > 0 ? (
                 <button
@@ -75,7 +85,7 @@ export const Cards = ({ listTerm, id }) => {
                   <ArrowBackIcon />
                 </button>
               )}
-              {flashcardData && flashcardData.length > 0 ? (
+              {flashcardData && flashcardData?.length > 0 ? (
                 <div className='cardNumber dark:text-white'>
                   {current + 1} / {flashcardData.length}
                 </div>

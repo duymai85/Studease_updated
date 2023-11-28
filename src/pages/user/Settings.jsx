@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-
-import { KEY_LS } from '../../utils/constant';
-import { userService } from '../../services';
 import { toast } from 'react-toastify';
+
+import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
+
+import { AVATAR_EMPTY } from '../../utils/constant';
+import { userService } from '../../services';
+import { cloudinary } from '../../config/cloudinary';
 
 export const Settings = () => {
   const [userInfo, setUserInfo] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [photo, setPhoto] = useState('');
   const {
     register,
     handleSubmit,
@@ -15,26 +21,65 @@ export const Settings = () => {
     formState: { errors },
   } = useForm();
 
-  useEffect(() => {
-    const userInfo = JSON.parse(localStorage.getItem(KEY_LS.USER_INFO));
-    if (userInfo) {
-      setValue('name', userInfo.name || '');
-      setValue('email', userInfo.email || '');
-      setValue('phone', userInfo.phone || '');
-      setValue('country', userInfo.country || '');
-      setUserInfo(userInfo);
+  const getUserInfo = async () => {
+    setIsLoading(true);
+    await userService
+      .getUserById('me')
+      .then((res) => {
+        if (res.data) {
+          const userInfo = res.data.user;
+          setValue('name', userInfo.name || '');
+          setValue('email', userInfo.email || '');
+          setValue('phone', userInfo.phone || '');
+          setValue('country', userInfo.country || '');
+          setPhoto(userInfo.photo || '');
+          setUserInfo(userInfo);
+        }
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        setIsLoading(false);
+      });
+  };
+
+  const handleChangeAvatar = async (e) => {
+    const file = e.target.files[0];
+    const data = new FormData();
+    data.append('file', file);
+    data.append('upload_preset', cloudinary.REACT_APP_CLOUDINARY_UPLOAD_PRESET);
+    data.append('cloud_name', cloudinary.REACT_APP_CLOUDINARY_CLOUD_NAME);
+    data.append('folder', 'Cloudinary-React');
+
+    try {
+      const response = await fetch(
+        `https://api.cloudinary.com/v1_1/${cloudinary.REACT_APP_CLOUDINARY_CLOUD_NAME}/image/upload`,
+        {
+          method: 'POST',
+          body: data,
+        }
+      );
+      const res = await response.json();
+      if (res.url) {
+        setPhoto(res.url);
+      }
+    } catch (error) {
+      console.log(error);
     }
+  };
+
+  useEffect(() => {
+    getUserInfo();
   }, []);
 
   const onSubmit = async (data) => {
+    console.log(data);
     if (userInfo) {
-      const dataUser = Object.assign(userInfo, data);
+      const dataUser = Object.assign(userInfo, { ...data, photo });
       await userService
         .updateUser(dataUser)
         .then((res) => {
           if (res.data) {
             setUserInfo(res.data);
-            localStorage.setItem(KEY_LS.USER_INFO, JSON.stringify(res.data));
             toast.success('Update information user successfully.');
           }
         })
@@ -44,7 +89,13 @@ export const Settings = () => {
     }
   };
 
-  return (
+  return isLoading ? (
+    <Box
+      sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+    >
+      <CircularProgress />
+    </Box>
+  ) : (
     <div className='bg-white w-full flex flex-col gap-5 px-3 md:px-16 lg:px-12 md:flex-row text-[#161931] dark:bg-primary-color dark:text-white'>
       <aside className='hidden py-4 md:w-1/3 lg:w-1/4 md:block'>
         <div className='sticky flex flex-col gap-2 p-4 text-sm border-r border-indigo-100 top-12'>
@@ -75,22 +126,31 @@ export const Settings = () => {
             <h2 className='pl-6 text-2xl font-bold sm:text-xl'>
               Public Profile
             </h2>
-
             <div className='grid max-w-2xl mx-auto mt-8'>
               <div className='flex flex-col items-center space-y-5 sm:flex-row sm:space-y-0'>
                 <img
                   className='object-cover w-40 h-40 p-1 rounded-full ring-2 ring-indigo-300 dark:ring-indigo-500'
-                  src='https://picsum.photos/300/300'
+                  src={photo || AVATAR_EMPTY}
                   alt='Bordered avatar'
+                  onError={(e) => {
+                    e.target['onerror'] = null;
+                    e.target['src'] = AVATAR_EMPTY;
+                  }}
                 />
 
                 <div className='flex flex-col space-y-5 sm:ml-8'>
-                  <button
-                    type='button'
-                    className='py-3.5 px-7 text-base font-medium text-indigo-100 focus:outline-none bg-[#202142] rounded-lg border border-indigo-200 hover:bg-indigo-900 focus:z-10 focus:ring-4 focus:ring-indigo-200 '
+                  <input
+                    type='file'
+                    id='upload'
+                    hidden
+                    onChange={handleChangeAvatar}
+                  />
+                  <label
+                    htmlFor='upload'
+                    className='py-3.5 px-7 text-base font-medium text-indigo-100 focus:outline-none bg-[#202142] rounded-lg border border-indigo-200 hover:bg-indigo-900 focus:z-10 focus:ring-4 focus:ring-indigo-200 cursor-pointer'
                   >
                     Change picture
-                  </button>
+                  </label>
                 </div>
               </div>
 

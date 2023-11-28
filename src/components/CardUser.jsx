@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { AVATAR_EMPTY } from '../utils/constant';
+
 export const CardUser = (props) => {
   const { item } = props;
 
@@ -7,9 +9,13 @@ export const CardUser = (props) => {
     <li className='w-full lg:w-[calc(50%_-_8px)] border shadow border-gray-200 rounded-3xl p-6 dark:bg-secondary-color dark:text-white dark:border-none'>
       <div className='mb-4'>
         <img
-          src='https://picsum.photos/300/300'
-          alt='Avatarr'
-          className='w-16 h-16 rounded-full'
+          src={item.photo || AVATAR_EMPTY}
+          alt='Avatar'
+          className='w-6 h-6 rounded-full mr-2'
+          onError={(e) => {
+            e.target['onerror'] = null;
+            e.target['src'] = AVATAR_EMPTY;
+          }}
         />
       </div>
       <div>

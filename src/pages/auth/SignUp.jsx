@@ -1,9 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { v4 as uuidv4 } from 'uuid';
 import { toast } from 'react-toastify';
 
-import { userService } from '../../services';
+import { authService } from '../../services';
 
 export const SignUp = () => {
   const navigate = useNavigate();
@@ -14,50 +13,25 @@ export const SignUp = () => {
     formState: { errors },
   } = useForm();
 
-  const checkUser = async (username) => {
-    let flag = false;
-
-    await userService
-      .checkExistUser(username)
+  const onSubmit = async (data) => {
+    const dataUser = {
+      name: data.username,
+      role: 'user',
+      ...data,
+    };
+    await authService
+      .register(dataUser)
       .then((res) => {
-        if (res.data.length) {
-          flag = true;
+        if (res.data) {
+          toast.success('Register account successfully.');
+          navigate('/login');
         }
       })
       .catch((error) => {
-        toast.error('Account already exists.');
+        toast.error(
+          error?.response?.data?.detail || 'Register account failed.'
+        );
       });
-
-    return flag;
-  };
-
-  const onSubmit = async (data) => {
-    const isExistUser = await checkUser(data.username);
-    const dataUser = {
-      id: uuidv4(),
-      phone: '',
-      name: data.username,
-      country: '',
-      ...data,
-    };
-    delete dataUser.confirmPassword;
-    if (!isExistUser) {
-      await userService
-        .register(dataUser)
-        .then((res) => {
-          if (res.data) {
-            toast.success('Register account successfully.');
-            navigate('/login');
-          } else {
-            toast.error('Register account failed.');
-          }
-        })
-        .catch((error) => {
-          toast.error('Register account failed.');
-        });
-    } else {
-      toast.error('Account already exists..');
-    }
   };
 
   return (
@@ -82,7 +56,7 @@ export const SignUp = () => {
             >
               <div>
                 <label
-                  for='username'
+                  htmlFor='username'
                   className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
                 >
                   Your username
@@ -102,7 +76,7 @@ export const SignUp = () => {
               </div>
               <div>
                 <label
-                  for='email'
+                  htmlFor='email'
                   className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
                 >
                   Your email
@@ -128,7 +102,7 @@ export const SignUp = () => {
               </div>
               <div>
                 <label
-                  for='password'
+                  htmlFor='password'
                   className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
                 >
                   Password
@@ -158,7 +132,7 @@ export const SignUp = () => {
                   id='confirm-password'
                   placeholder='••••••••'
                   className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:outline-none'
-                  {...register('confirmPassword', {
+                  {...register('passwordConfirm', {
                     required: 'Confirm password is required',
                     validate: (val) => {
                       if (watch('password') !== val) {
@@ -167,9 +141,9 @@ export const SignUp = () => {
                     },
                   })}
                 />
-                {errors.confirmPassword?.message && (
+                {errors.passwordConfirm?.message && (
                   <span className='text-red-600 text-xs'>
-                    {errors.confirmPassword?.message}
+                    {errors.passwordConfirm?.message}
                   </span>
                 )}
               </div>

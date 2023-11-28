@@ -16,8 +16,8 @@ export const SearchUsers = (props) => {
     await userService
       .getAllUserByUsername(stringSearch)
       .then((res) => {
-        if (res.data.length) {
-          setListUser(res.data);
+        if (res.data) {
+          setListUser(res.data.users);
         }
         setIsLoading(false);
       })

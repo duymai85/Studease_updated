@@ -8,10 +8,10 @@ import SaveIcon from '@mui/icons-material/Save';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 
-import { KEY_LS } from '../../utils/constant';
-import { flashCardService, userService } from '../../services';
+import { KEY_LS, AVATAR_EMPTY } from '../../utils/constant';
+import { flashCardService } from '../../services';
 import { CircleProgressWithLabel } from '../../components';
-import { checkUserLogin } from '../../utils';
+import { checkUserLogin, parseJwt } from '../../utils';
 
 const listDay = JSON.parse(localStorage.getItem(KEY_LS.DATE_LOGIN)) || [];
 const bookedDays = listDay.map((item) => {
@@ -44,14 +44,9 @@ export const Home = (props) => {
     setIsLoading(true);
     await flashCardService
       .getAllSet()
-      .then(async (res) => {
+      .then((res) => {
         if (res.data) {
-          const data = [];
-          for (const item of res.data) {
-            const name = await getNameOfUser(item.userId);
-            data.push({ ...item, userName: name });
-          }
-          setListSet(data);
+          setListSet(res.data.sets);
         }
         setIsLoading(false);
       })
@@ -60,25 +55,11 @@ export const Home = (props) => {
       });
   };
 
-  const getNameOfUser = async (id) => {
-    let name = '';
-    if (id) {
-      await userService
-        .getUserById(id)
-        .then((res) => {
-          if (res.data) {
-            name = res.data.username;
-          }
-        })
-        .catch((error) => {});
-    }
-    return name;
-  };
-
   useEffect(() => {
     getListSet();
-    const userInfo = JSON.parse(localStorage.getItem(KEY_LS.USER_INFO));
-    if (userInfo) {
+    const accessToken = JSON.parse(localStorage.getItem(KEY_LS.ACCESS_TOKEN));
+    if (accessToken) {
+      const userInfo = parseJwt(accessToken);
       setUserInfo(userInfo);
     }
     const listProgress = JSON.parse(localStorage.getItem(KEY_LS.LIST_PROGRESS));
@@ -95,8 +76,8 @@ export const Home = (props) => {
     </Box>
   ) : (
     <>
-      <div className='flex justify-between'>
-        <div className='w-2/5 bg-green-200 text-black flex rounded-full py-2'>
+      <div className='flex justify-between lg:flex-row flex-col lg:gap-20 gap-4'>
+        <div className='w-full bg-green-200 text-black flex rounded-full py-2 items-center lg:justify-center'>
           <div className='font-bold h-full flex items-center px-3'>
             <AddIcon />
           </div>
@@ -105,7 +86,7 @@ export const Home = (props) => {
             <p>Create & customize your own flashcards</p>
           </Link>
         </div>
-        <div className='w-2/5 bg-pink-300 text-black flex rounded-full py-2'>
+        <div className='w-full bg-pink-300 text-black flex rounded-full py-2 items-center lg:justify-center'>
           <div className='font-bold h-full flex items-center px-3'>
             <SaveIcon />
           </div>
@@ -162,22 +143,26 @@ export const Home = (props) => {
                           <span>{item.data ? item.data.length : 0} Terms</span>
                         </div>
                       </div>
-                      {checkUserLogin() && listProgress[userInfo.id] && (
+                      {checkUserLogin() && listProgress[userInfo.sub] && (
                         <div>
                           <CircleProgressWithLabel
-                            value={listProgress[userInfo.id][item.id] || 0}
+                            value={listProgress[userInfo.sub][item.id] || 0}
                           />
                         </div>
                       )}
                     </div>
                     <div className='flex items-center gap-1 mt-12'>
                       <img
-                        src='https://picsum.photos/300/300'
+                        src={item?.user?.photo || AVATAR_EMPTY}
                         alt='Avatar'
                         className='w-6 h-6 rounded-full mr-2'
+                        onError={(e) => {
+                          e.target['onerror'] = null;
+                          e.target['src'] = AVATAR_EMPTY;
+                        }}
                       />
                       <h5 className='font-medium text-xs'>
-                        {item.userName || ''}
+                        {item?.user?.name || ''}
                       </h5>
                     </div>
                   </Link>
