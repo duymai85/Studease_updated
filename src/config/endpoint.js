@@ -14,6 +14,7 @@ export const ENDPOINT = {
   },
   user: {
     index: `${RESOURCES.user}`,
+    changePassword: `${RESOURCES.user}/change-password`,
   },
   class: {
     index: `${RESOURCES.class}`,

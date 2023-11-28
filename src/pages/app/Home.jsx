@@ -144,7 +144,7 @@ export const Home = (props) => {
                         </div>
                       </div>
                       {checkUserLogin() && listProgress[userInfo.sub] && (
-                        <div>
+                        <div className='dark:text-white'>
                           <CircleProgressWithLabel
                             value={listProgress[userInfo.sub][item.id] || 0}
                           />

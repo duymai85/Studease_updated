@@ -1,14 +1,31 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
+
+import { userService } from '../../../services';
 
 const AccountSetting = () => {
   const {
     register,
     handleSubmit,
-    setValue,
+    watch,
     formState: { errors },
   } = useForm();
-  const onSubmit = async (data) => {};
+
+  const onSubmit = async (data) => {
+    await userService
+      .changePassword(data)
+      .then((res) => {
+        if (res.data) {
+          toast.success(res.data.message);
+        }
+      })
+      .catch((error) => {
+        toast.error(
+          error?.response?.data?.detail || 'Register account failed.'
+        );
+      });
+  };
 
   return (
     <div className='p-2 md:p-4'>
@@ -17,39 +34,39 @@ const AccountSetting = () => {
         <div className='grid max-w-2xl mx-auto'>
           <form
             className='items-center mt-2 sm:mt-8 text-[#202142]'
-            // onSubmit={handleSubmit(onSubmit)}
+            onSubmit={handleSubmit(onSubmit)}
           >
             <div className='mb-2 sm:mb-6'>
               <label
-                htmlFor='password'
+                htmlFor='current-password'
                 className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
               >
-                Old password
+                Current password
               </label>
               <input
                 type='password'
-                id='password'
+                id='current-password'
                 placeholder='••••••••'
                 className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:outline-none'
-                {...register('oldPassword', { required: true })}
+                {...register('currentPassword', { required: true })}
               />
               {errors.oldPassword && (
                 <span className='text-red-600 text-xs'>
-                  Old password is required
+                  Current password is required
                 </span>
               )}
             </div>
 
             <div className='mb-2 sm:mb-6'>
               <label
-                htmlFor='password'
+                htmlFor='new-password'
                 className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
               >
                 New password
               </label>
               <input
                 type='password'
-                id='password'
+                id='new-password'
                 placeholder='••••••••'
                 className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:outline-none'
                 {...register('newPassword', { required: true })}
@@ -62,25 +79,31 @@ const AccountSetting = () => {
             </div>
             <div className='mb-2 sm:mb-6'>
               <label
-                htmlFor='password'
+                htmlFor='confirm-password'
                 className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
               >
-                Confirm new password
+                Confirm password
               </label>
               <input
                 type='password'
-                id='password'
+                id='confirm-password'
                 placeholder='••••••••'
                 className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:outline-none'
-                {...register('confirmNewPassword', { required: true })}
+                {...register('confirmPassword', {
+                  required: 'Confirm password is required',
+                  validate: (val) => {
+                    if (watch('newPassword') !== val) {
+                      return 'Your passwords do no match';
+                    }
+                  },
+                })}
               />
-              {errors.oldPassword && (
+              {errors.confirmPassword?.message && (
                 <span className='text-red-600 text-xs'>
-                  Confirm new password is required
+                  {errors.confirmPassword?.message}
                 </span>
               )}
             </div>
-
             <div className='flex justify-end'>
               <button
                 type='submit'
