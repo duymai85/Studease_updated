@@ -90,4 +90,23 @@ export const flashCardService = {
       url: `${ENDPOINT.set.index}/${id}`,
     });
   },
+  getComment(setId) {
+    return client.request({
+      method: 'get',
+      url: `${ENDPOINT.set.index}/${setId}/comments`,
+    });
+  },
+  createComment(setId, data) {
+    return client.request({
+      method: 'post',
+      url: `${ENDPOINT.set.index}/${setId}/comments`,
+      data,
+    });
+  },
+  deleteComment(commentId) {
+    return client.request({
+      method: 'delete',
+      url: `${ENDPOINT.set.index}/${commentId}/comments`,
+    });
+  },
 };
