@@ -1,10 +1,5 @@
 import { useEffect, useState } from 'react';
-import {
-  Link,
-  useLocation,
-  useNavigate,
-  useSearchParams,
-} from 'react-router-dom';
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
 
 import AddIcon from '@mui/icons-material/Add';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
@@ -24,12 +19,10 @@ import SnoozeIcon from '@mui/icons-material/Snooze';
 import { flashCardService } from '../services';
 import { KEY_LS } from '../utils/constant';
 import { checkUserLogin, parseJwt } from '../utils/index';
-// import { requestForToken, onMessageListener } from '../config/firebase';
 
 const ITEM_HEIGHT = 48;
 
 export const Header = (props) => {
-  const navigate = useNavigate();
   const location = useLocation();
   const [searchParams] = useSearchParams();
   const [anchorEl, setAnchorEl] = useState(null);

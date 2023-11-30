@@ -1,11 +1,9 @@
 import { KEY_LS } from './constant';
 
 /**
- * Returns x raised to the n-th power.
+ * Returns boolean if user login
  *
- * @param {number} x The number to raise.
- * @param {number} n The power, must be a natural number.
- * @return {number} x raised to the n-th power.
+ * @return {boolean} user login.
  */
 export const checkUserLogin = () => {
   const accessToken = JSON.parse(localStorage.getItem(KEY_LS.ACCESS_TOKEN));
@@ -15,6 +13,12 @@ export const checkUserLogin = () => {
   return false;
 };
 
+/**
+ * Returns object parse jwt of access token.
+ *
+ * @param {string} token The access token.
+ * @return {object} json parse jwt.
+ */
 export function parseJwt(token) {
   if (token) {
     const base64Url = token.split('.')[1];
