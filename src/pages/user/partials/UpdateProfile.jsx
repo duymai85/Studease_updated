@@ -59,6 +59,7 @@ const UpdateProfile = ({ userInfo, setUserInfo }) => {
 
   useEffect(() => {
     if (userInfo) {
+      // set data to input field
       setValue('name', userInfo.name || '');
       setValue('email', userInfo.email || '');
       setValue('phone', userInfo.phone || '');

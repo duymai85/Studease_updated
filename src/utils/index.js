@@ -1,5 +1,12 @@
 import { KEY_LS } from './constant';
 
+/**
+ * Returns x raised to the n-th power.
+ *
+ * @param {number} x The number to raise.
+ * @param {number} n The power, must be a natural number.
+ * @return {number} x raised to the n-th power.
+ */
 export const checkUserLogin = () => {
   const accessToken = JSON.parse(localStorage.getItem(KEY_LS.ACCESS_TOKEN));
   if (accessToken) {
