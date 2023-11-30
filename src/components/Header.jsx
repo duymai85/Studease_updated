@@ -56,7 +56,7 @@ export const Header = (props) => {
     if (isLogged) {
       setAnchorEl(event.currentTarget);
     } else {
-      navigate('/login');
+      window.location.href = '/login';
     }
   };
   const handleClose = () => {
