@@ -177,9 +177,7 @@ export const Set = () => {
                     </button>
                   </div>
                   <FacebookShareButton
-                    url={
-                      'https://www.cluemediator.com/dynamic-form-with-react-hook-form-using-usefieldarray'
-                    }
+                    url={window.location.href}
                     style={{
                       marginBottom: '24px',
                       maxWidth: '500px',
@@ -192,9 +190,7 @@ export const Set = () => {
                     </button>
                   </FacebookShareButton>
                   <TwitterShareButton
-                    url={
-                      'https://www.cluemediator.com/dynamic-form-with-react-hook-form-using-usefieldarray'
-                    }
+                    url={window.location.href}
                     style={{
                       marginBottom: '24px',
                       maxWidth: '500px',
