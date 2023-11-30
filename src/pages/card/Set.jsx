@@ -22,6 +22,8 @@ import { Cards } from '../../components/Cards';
 import { AVATAR_EMPTY, KEY_LS } from '../../utils/constant';
 import { parseJwt } from '../../utils';
 
+import CommentList from './partials/CommentList';
+
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
     padding: theme.spacing(2),
@@ -34,9 +36,11 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 export const Set = () => {
   const [set, setSet] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingComment, setIsLoadingComment] = useState(false);
   const [userInfo, setUserInfo] = useState({});
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [listComment, setListComment] = useState([]);
   const { id } = useParams();
 
   const handleClickOpen = () => {
@@ -79,6 +83,19 @@ export const Set = () => {
     }
   };
 
+  const getCommentBySetId = async () => {
+    if (id) {
+      await flashCardService
+        .getComment(id)
+        .then((res) => {
+          if (res.data.length) {
+            setListComment(res.data);
+          }
+        })
+        .catch((error) => {});
+    }
+  };
+
   useEffect(() => {
     const accesToken = JSON.parse(localStorage.getItem(KEY_LS.ACCESS_TOKEN));
     if (userInfo) {
@@ -86,6 +103,7 @@ export const Set = () => {
       setUserInfo(user);
     }
     getSetById();
+    getCommentBySetId();
     // eslint-disable-next-line
   }, []);
 
@@ -96,7 +114,7 @@ export const Set = () => {
       <CircularProgress />
     </Box>
   ) : (
-    <section className='lg:w-[70%] w-full m-auto px-5 pb-40 dark:text-white'>
+    <section className='lg:w-[70%] w-full m-auto px-5 pb-20 dark:text-white'>
       <div className='mb-8'>
         <h2 className='text-3xl font-bold mb-2'>{set.name || ''}</h2>
         <span className='text-gray-700 font-semibold dark:text-white'>
@@ -239,6 +257,11 @@ export const Set = () => {
               </Link>
             </div>
           ) : null}
+          <CommentList
+            listComment={listComment}
+            setListComment={setListComment}
+            userInfo={userInfo}
+          />
         </div>
         <div className='w-3/12 mt-3'>
           {/* <img
