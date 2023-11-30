@@ -24,6 +24,7 @@ export const Login = () => {
       .then((res) => {
         if (res.data) {
           toast.success('Login successfully.');
+          // save access token to localStorage
           localStorage.setItem(
             KEY_LS.ACCESS_TOKEN,
             JSON.stringify(res.data.access_token)
