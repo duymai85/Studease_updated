@@ -45,6 +45,7 @@ export const Cards = ({ listTerm, id }) => {
 
   useEffect(() => {
     setflashcardData(listTerm);
+    // eslint-disable-next-line
   }, []);
 
   window.onbeforeunload = () => {

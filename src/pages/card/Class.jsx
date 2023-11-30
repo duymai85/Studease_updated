@@ -115,6 +115,7 @@ export const Class = () => {
 
   useEffect(() => {
     getClassById();
+    // eslint-disable-next-line
   }, []);
 
   return isLoading ? (

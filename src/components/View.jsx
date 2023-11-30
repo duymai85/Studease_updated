@@ -5,6 +5,7 @@ import 'react-multi-carousel/lib/styles.css';
 export const View = (props) => {
   useEffect(() => {
     props.changeUI(true);
+    // eslint-disable-next-line
   }, []);
 
   const responsive = {
@@ -56,7 +57,10 @@ export const View = (props) => {
 
           <div className='w-full flex justify-center'>
             <div className='w-1/3'>
-              <img src='https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg'></img>
+              <img
+                src='https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg'
+                alt='mobile phone'
+              ></img>
             </div>
           </div>
         </div>
@@ -67,7 +71,10 @@ export const View = (props) => {
 
           <div className='w-full flex justify-center'>
             <div className='w-1/3'>
-              <img src='https://dfstudio-d420.kxcdn.com/wordpress/wp-content/uploads/2019/06/digital_camera_photo-1080x675.jpg'></img>
+              <img
+                src='https://dfstudio-d420.kxcdn.com/wordpress/wp-content/uploads/2019/06/digital_camera_photo-1080x675.jpg'
+                alt='mobile phone'
+              ></img>
             </div>
           </div>
         </div>
@@ -78,7 +85,10 @@ export const View = (props) => {
 
           <div className='w-full flex justify-center'>
             <div className='w-1/3'>
-              <img src='https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png'></img>
+              <img
+                src='https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png'
+                alt='mobile phone'
+              ></img>
             </div>
           </div>
         </div>
@@ -89,7 +99,10 @@ export const View = (props) => {
 
           <div className='w-full flex justify-center'>
             <div className='w-1/3'>
-              <img src='https://www.seiu1000.org/sites/main/files/main-images/camera_lense_0.jpeg'></img>
+              <img
+                src='https://www.seiu1000.org/sites/main/files/main-images/camera_lense_0.jpeg'
+                alt='camera'
+              ></img>
             </div>
           </div>
         </div>

@@ -38,6 +38,7 @@ export const CreateSet = (props) => {
 
   useEffect(() => {
     props.changeUI(true);
+    // eslint-disable-next-line
   }, []);
 
   const updateSetToClass = async (id) => {

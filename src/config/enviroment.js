@@ -1,3 +1,3 @@
 export const environment = {
-  apiBaseUrl: 'http://localhost:8000/api/',
+  apiBaseUrl: 'https://flashcard-service-qn8c.onrender.com/api/',
 };

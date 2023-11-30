@@ -65,6 +65,7 @@ const UpdateProfile = ({ userInfo, setUserInfo }) => {
       setValue('country', userInfo.country || '');
       setPhoto(userInfo.photo || '');
     }
+    // eslint-disable-next-line
   }, []);
 
   return (

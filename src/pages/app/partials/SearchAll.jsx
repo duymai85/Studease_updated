@@ -64,6 +64,7 @@ export const SearchAll = (props) => {
     getListUser();
     getListClass();
     getListSet();
+    // eslint-disable-next-line
   }, []);
 
   return isLoading ? (

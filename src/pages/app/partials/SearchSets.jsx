@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 
-import { userService } from '../../../services';
 import { flashCardService } from '../../../services';
 import { CardSet } from '../../../components';
 
@@ -29,6 +28,7 @@ export const SearchSets = (props) => {
 
   useEffect(() => {
     getListSet();
+    // eslint-disable-next-line
   }, []);
 
   return isLoading ? (

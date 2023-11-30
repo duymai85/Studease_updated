@@ -28,6 +28,7 @@ export const SearchClasses = (props) => {
 
   useEffect(() => {
     getListClass();
+    // eslint-disable-next-line
   }, []);
 
   return isLoading ? (

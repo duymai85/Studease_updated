@@ -109,6 +109,7 @@ export const EditSet = () => {
 
   useEffect(() => {
     getSetById();
+    // eslint-disable-next-line
   }, []);
 
   return isLoading ? (

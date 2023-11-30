@@ -168,19 +168,8 @@ export const Header = (props) => {
     const listNotification =
       JSON.parse(localStorage.getItem(KEY_LS.LIST_NOTIFICATION)) || [];
     setListNotification(listNotification);
+    // eslint-disable-next-line
   }, [location]);
-
-  // useEffect(() => {
-  //   requestForToken();
-  // }, []);
-
-  // useEffect(() => {
-  //   onMessageListener()
-  //     .then((payload) => {
-  //       console.log(payload);
-  //     })
-  //     .catch((err) => console.log('failed: ', err));
-  // }, []);
 
   return (
     <>

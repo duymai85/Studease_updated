@@ -86,6 +86,7 @@ export const Set = () => {
       setUserInfo(user);
     }
     getSetById();
+    // eslint-disable-next-line
   }, []);
 
   return isLoading ? (

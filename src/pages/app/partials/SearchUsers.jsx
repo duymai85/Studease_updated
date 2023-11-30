@@ -28,6 +28,7 @@ export const SearchUsers = (props) => {
 
   useEffect(() => {
     getListUser();
+    // eslint-disable-next-line
   }, []);
 
   return isLoading ? (
