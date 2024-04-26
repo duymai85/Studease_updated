@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
 import { authService } from '../../services';
+import { useEffect } from 'react';
 
 export const SignUp = () => {
   const navigate = useNavigate();
@@ -33,6 +34,11 @@ export const SignUp = () => {
         );
       });
   };
+
+  useEffect(() => {
+    const dataLayer = window.dataLayer || [];
+    dataLayer.push({'pageTitle': 'Sign up'});
+  })
 
   return (
     <section className='h-full'>

@@ -56,6 +56,8 @@ export const Home = (props) => {
   };
 
   useEffect(() => {
+    const dataLayer = window.dataLayer || [];
+    dataLayer.push({'pageTitle': 'Home'});
     getListSet();
     const accessToken = JSON.parse(localStorage.getItem(KEY_LS.ACCESS_TOKEN));
     if (accessToken) {

@@ -3,6 +3,7 @@ import { SearchAll } from './partials/SearchAll';
 import { SearchSets } from './partials/SearchSets';
 import SearchClasses from './partials/SearchClasses';
 import { SearchUsers } from './partials/SearchUsers';
+import { useEffect } from 'react';
 
 export const Search = () => {
   const [searchParams] = useSearchParams();
@@ -23,6 +24,11 @@ export const Search = () => {
         return <></>;
     }
   };
+
+  useEffect(() => {
+    const dataLayer = window.dataLayer || [];
+    dataLayer.push({'pageTitle': 'Search'});
+  })
 
   return (
     <>

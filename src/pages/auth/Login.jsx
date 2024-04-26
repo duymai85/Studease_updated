@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -36,6 +36,11 @@ export const Login = () => {
         toast.error(error?.response?.data?.detail || 'Login failed.');
       });
   };
+
+  useEffect(() => {
+    const dataLayer = window.dataLayer || [];
+    dataLayer.push({'pageTitle': 'Login'});
+  })
 
   return (
     <section className='h-full'>
