@@ -121,6 +121,8 @@ export const Header = (props) => {
 
   const handleSearch = (e) => {
     e.preventDefault();
+    const dataLayer = window.dataLayer || [];
+    dataLayer.push({'event': 'search'});
     window.location.href = `/search?query=${search}&type=all`;
   };
 
