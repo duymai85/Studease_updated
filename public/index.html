@@ -39,6 +39,19 @@
       })(window, document, 'script', 'dataLayer', 'GTM-T9FPMM7X');
     </script>
     <!-- End Google Tag Manager -->
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-RKRV3793GZ"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'G-RKRV3793GZ');
+    </script>
   </head>
   <body className="dark">
     <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -53,15 +66,24 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
-    <!-- Google Tag Manager (noscript) -->
-    <noscript
-      ><iframe
-        src="https://www.googletagmanager.com/ns.html?id=GTM-T9FPMM7X"
-        height="0"
-        width="0"
-        style="display: none; visibility: hidden"
-      ></iframe
-    ></noscript>
-    <!-- End Google Tag Manager (noscript) -->
   </body>
+  <script>
+    // Create the <noscript> element
+    const noscriptElement = document.createElement('noscript');
+
+    // Create the <iframe> element
+    const iframeElement = document.createElement('iframe');
+    iframeElement.src =
+      'https://www.googletagmanager.com/ns.html?id=GTM-T9FPMM7X';
+    iframeElement.height = '0';
+    iframeElement.width = '0';
+    iframeElement.style.display = 'none';
+    iframeElement.style.visibility = 'hidden';
+
+    // Append the <iframe> element to the <noscript> element
+    noscriptElement.appendChild(iframeElement);
+
+    // Append the <noscript> element to the <body> of the document
+    document.body.appendChild(noscriptElement);
+  </script>
 </html>
